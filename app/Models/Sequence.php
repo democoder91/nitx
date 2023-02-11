@@ -104,11 +104,8 @@ class Sequence extends Model
     {
         $seq =  DB::table('sequences')
             ->select('*')
-            // where media owner id is equal to the media owner id of the sequence or null
-            ->where(function ($query) use ($mediaOnwerId) {
-                $query->where('media_owner_id', '=', $mediaOnwerId)
-                    ->orWhere('media_owner_id', '=', null);
-            })
+            ->where('media_owner_id', '=', $mediaOnwerId)
+            ->orWhere('media_owner_id', '=', Null)
             ->where('deleted_at', '=', null)
             ->get();
 

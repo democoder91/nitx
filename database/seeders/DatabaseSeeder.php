@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
                 CategorySeeder::class,
                 SequenceDay::class,
                 MediaSeeder::class,
+                DefaultMediaOwnerSeeder::class,
                 DefaultSequence::class,
                 PlanSeeder::class,
             ]);

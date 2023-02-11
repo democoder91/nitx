@@ -24,7 +24,7 @@ class Sequence extends Seeder
                 'name' => 'Default Sequence',
                 'status' => 'live',
                 //default media owner id
-                'media_owner_id' => MediaOwner::where('name', 'Default Media Owner')->first()->id,
+                'media_owner_id' => Null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
@@ -47,17 +47,23 @@ class Sequence extends Seeder
                     ]);
                 }
             }
-            // // for each day of the week
-            // foreach ($days as $day) {
-            //     ddd($day);
-            //     // check if the sequence day exists
-            //     $sequenceDay = DB::table('sequence_sequence_day')->where('sequence_id', $defaultSequence->id)->where('sequence_day_id', $day->id)->first();
-            //         // create sequence day
-            //         DB::table('sequence_sequence_day')->insert([
-            //             'sequence_id' => $defaultSequence->id,
-            //             'sequence_day_id ' => $day->id,
-            //         ]);
-            // }
+
+            // check if the default media_sequence exists
+            $defaultMediaSequence = DB::table('media_sequence')->where('sequence_id', $defaultSequence->id)->first();
+            if ($defaultMediaSequence == null) {
+                // create default media_sequence
+                DB::table('media_sequence')->insert([
+                    'sequence_id' => $defaultSequence->id,
+                    'media_id' => DB::table('media')->where('name', 'default')->first()->id,
+                    'order' => 0,
+                    'minutes' => '10',
+                    'seconds' => '30',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+
+            
             
 
         

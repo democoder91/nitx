@@ -102,11 +102,19 @@ class Sequence extends Model
 
     public static function getAllSequences($mediaOnwerId)
     {
-        return DB::table('sequences')
+        $seq =  DB::table('sequences')
             ->select('*')
-            ->where('media_owner_id', '=', $mediaOnwerId)
+            // where media owner id is equal to the media owner id of the sequence or null
+            ->where(function ($query) use ($mediaOnwerId) {
+                $query->where('media_owner_id', '=', $mediaOnwerId)
+                    ->orWhere('media_owner_id', '=', null);
+            })
             ->where('deleted_at', '=', null)
             ->get();
+
+            
+
+        return $seq;
     }
 
     public static function getReadySequences()

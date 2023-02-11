@@ -16,7 +16,7 @@ class MediaSeeder extends Seeder
             // create default media
             DB::table('media')->insert([
                 'name' => 'default',
-                'path' => 'img/ad/NoScreenMedia.png',
+                'compressed_media_path' => 'https://nitx-s3-uploder.s3.me-south-1.amazonaws.com/local/user-1/compressed-images/image-png/2023-02-11/3c75af7eb6a279a8f62209b1bcf60423.png',
                 'size' => '26500',
                 'width' => '1920',
                 'height' => '1080',

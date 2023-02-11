@@ -364,9 +364,11 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <img id="live-group-sequence-img-{{ $screen_group->id }}"
-                                             src="{{ asset('img/ad/NoScreenMedia.png') }}"
-                                             style="  width:100%; height:20em; object-fit:cover; border:solid 5px black;">
+                                        <img 
+                                        
+                                        id="live-group-sequence-img-{{ $screen_group->id }}" --}}
+                                            src="{{ asset('img/ad/NoScreenMedia.png') }}"
+                                            style="  width:100%; height:20em; object-fit:cover; border:solid 5px black;">
                                     </div>
                                 </div>
                             </div>

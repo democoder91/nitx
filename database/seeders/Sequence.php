@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\MediaOwner;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,11 +23,14 @@ class Sequence extends Seeder
             DB::table('sequences')->insert([
                 'name' => 'Default Sequence',
                 'status' => 'live',
+                //default media owner id
+                'media_owner_id' => MediaOwner::where('name', 'Default Media Owner')->first()->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
         }
-            
+        $defaultSequence = DB::table('sequences')->where('name', 'Default Sequence')->first();
+
             // bring all days of the week from the database 
             $days = DB::table('sequence_days')->get();
 

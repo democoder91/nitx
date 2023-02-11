@@ -304,7 +304,6 @@
                             <label for="sequence_id" class="col-form-label">{{ __('Create group sequence') }}</label>
                             <select class="form-select form-select-lg mb-16" aria-label="sequence_id"
                                     name="sequence_id">
-                                <option value="1">{{ __('Default Sequence') }}</option>
                                 @foreach ($all_sequences as $sequence)
                                     <option value="{{ $sequence->id }}">{{ $sequence->name }}</option>
                                 @endforeach
@@ -424,7 +423,6 @@
                                                 </label>
                                                 <select class="form-select form-select-lg mb-16"
                                                         aria-label="modal-sequence-id" name="modal-sequence-id">
-                                                    <option value="1">{{ __('Default Sequence') }}</option>
                                                     @foreach ($all_sequences as $sequence)
                                                         <option value="{{ $sequence->id }}"
                                                                 {{ $sequence->id == $screen_group->sequence_id ? 'selected="selected"' : '' }}>

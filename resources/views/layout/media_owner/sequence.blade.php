@@ -246,6 +246,7 @@
                                     </div>
                                 @else
                                     @foreach($sequences as $sequence)
+                                    @if($sequence->name != "Default Sequence")
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" style="margin: 1em 0em 1em">
                                             <div class="card hp-card-1 border border-black-60">
                                                 <div class="card-body py-16">
@@ -317,7 +318,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div><!--End of Sequence Card-->
+                                        </div>
+                                    
+                                        
+                                    @endif
+                                        <!--End of Sequence Card-->
                                     @endforeach
                                 @endif
                             </div>

@@ -1,0 +1,164 @@
+{
+    "Hero": "Digital signage software has never been easier before⚡️",
+    "Hero 2": "Manage your screens. Fast. Simple. At any time. From any where.",
+
+    "welcome login": "Welcome to Nitx ecosystem 👋",
+    
+    "Features h2": "Built With Amazing Features 💥",
+    
+    "Features card1 h4": "Offline Playback",
+    "Features card1 p": "All the media,that have been already uploaded to your screen, will proceed to normally playback even in an offline mode.",
+    
+    "Features card2 h4": "Customer Support",
+    "Features card2 p": "We help our customers in solving of their issues through our 24/7 online email available right in their personal accounts.",
+    
+    "Features card3 h4": "No Hardware",
+    "Features card3 p": "controlling your screen has never been easier with our CTV technology you can connect to any screen anywhere any time.",
+
+    "Features card4 h4": "Dedicated Storage",
+    "Features card4 p": "Stores media as much as you want and you can use it on your screens in the order you like with whatever duration you like.",
+
+
+    "index product 2ed-sec-A title": "Easy and quick admin panel for any media owner",
+    "index product 2ed-sec-A subtitle": "Powerful solution for controlling all your screens in one platform, you can show any media you like or make money by turning your screen into an ad screen",
+    "index product 2ed-sec-A text": "With Nitx, you get an admin panel to control your media inventory with ease.",
+    "index product 2ed-sec-A list-A": "You can manage your inventory",
+    "index product 2ed-sec-A list-B": "You can customized your media inventory legislation",
+
+    "index product 2ed-sec-B title": "Make money while you sleep.",
+    "index product 2ed-sec-B text": "link your screen with Nitx and make a profit while you sleep.",
+    "index product 2ed-sec-B list-A": "Link any-screen",
+    "index product 2ed-sec-B list-B": "Link any-time",
+    "index product 2ed-sec-B list-C": "Link any-where",
+
+    "index product 3ed-sec-A title" : "Work anywhere, with any device📱",
+    "index product 3ed-sec-A p": "Manage and control all your screen on the go with our responsive UI design",
+    "index product 3ed-sec-A card": "Add Media",
+    "index product 3ed-sec-A card 2": "Create & remove",
+
+    "index product 3ed-sec-A card-2": "Unique Controls",
+    "index product 3ed-sec-A card-2 2": "for each screen",
+
+    "index product 4ed-sec-A title": "No Wires No Hardware just some magic✨",
+    "index product 4ed-sec-A text": "Make profit while you sleep by turning your screen into an ad screen, you can see and approve the ads from the dashboard on the platform. more ads you approve means more money for you",
+
+    "Partner text": "Become a partner and get rewarded by inserting your name and email you will receive a code on your email, share this code with your friend, and get rewarded on each screen connected to our network of screens",
+
+    "Pricing title": "Pricing &amp; Plans",
+    "Pricing subtitle": "Unlock the full potential of your screen by using nitx one view platform",
+
+    "Boost": "Need a Boost!🚀",
+    "Boost text" : "No worry we got you covered, if you are a business owner and your business needs special plans fill out the inquiry form, and will contact you soon",
+
+    "__comment2__": "start of fotter",
+
+    "Our messages": "Nitx attempts to bring the best advertising experience to advertisers and media owners by offering the tools needed for having a quick and solid start in most advertising campaigns.",
+
+    "Services": "Services",
+    "Careers": "Careers",
+    "Company": "Company",
+
+    "Contacts text": "Feel free to get in touch with us via email messages.",
+
+    "Help center": "Help center",
+    "Support": "Support",
+    "reserved-date": "2022",
+
+
+    "All rights reserved": "All rights reserved",
+    "Terms": "Terms",
+    "Privacy": "Privacy",
+    "Cookies": "Cookies",
+
+
+    "__comment3__": "media owner start",
+    "__comment3_": "media owner start login",
+
+    "Login welcome" : "Welcome back, please login to your account.",
+
+    "Dont have account": "Don’t you have an account?",
+
+    "Google auth": "Continue with Google account",
+    "Facebook auth": "Continue with Facebook account",
+    "conditions": "*By register your account, you agree to the",
+
+    "__comment5__": "media owner end register",
+
+    "__comment6__": "media owner start layout",
+    "Media owner welcome": "Welcome to Nitx Blink, stay tuned for our next updates 🎉🔥⚡",
+        "__comment7__": "media owner end layout",
+
+    "__comment8__":"media owner start dashboard",
+    "no ads message": "there are no incoming Ads for you",
+    "link dashboard text": "Link any screen with a Blink",
+    "link dashboard text2": "by upgrading your plan to premium",
+
+    "__comment12__":"media owner start screens",
+
+    "Screen text": "Manage all your screen with nitx one view",
+    "Empty screen group": "there are no screen groups yet!",
+    "Ad report": "having trouble with an ad?",
+    "Ad report 2": "If you having any Inconvenience Ads in your screen you can report it now",
+    "Create group sequence": "Sequence to be assigned to this group",
+    "Create group note": "Note: if you will not select a sequence, the group will be assigned to the default sequence, you can edit the default sequence later from the",
+    "Screen in group": "Screen in this group",
+    "Sequence assign": "Sequence assign to this group:",
+    "make active": "Make this group active",
+    "waring message": "you selected screen/screens that assigned to another group if you continue we will disable the other group and make this group as active",
+    "waring message switch": "You can't switch back to the regular screen until all the ads are ending",
+    "__comment13__":"media owner end screens",
+
+    "__comment23__": "media owner start sequence",
+    "Empty sq": "There are no sequence yet!",
+    "__comment24__": "media owner end sequence",
+
+    "__comment15__": "media owner start meida",
+    "Empty folder":"There are no media in this folder!",
+    "Empty sequence": "There are no sequence yet!",
+    "delete media text": "Are you sure to delete the media? type",
+    "rename media text": "Type the media new name",
+    "rename folder text":"Type the folder new name",
+    "delete folder text": "Are you sure to delete the folder and its all contents? type",
+    "__comment16__": "media owner end meida",
+
+    "__comment17__": "media owner start wallet",
+    "no plan message": "You have no active plan on your account",
+    "monthly plan billing": "Billing Monthly &nbsp | &nbsp Next Invoice on",
+    "Payment Options text": "Be sure to click on correct payment option",
+    "bank transfer message": "Please send us a copy of the transfer at info@nitx.io",
+    "withdraw text": "Note: we will transfer the money to your account in the end of each month",
+    "cancel plan text": "Are you sure you want to cancel your plan?",
+    "cancel tell ass why": "Tell us, why you want to cancel your plan?",
+    "not using the services": "I'm no longer using the services",
+    "expensive":"The service too expensive for me",
+    "different provider": "I'm switching to a different service provider",
+    "primary card text": "Do you want to make this card your primary card?",
+    "delete card text": "Are you sure you want to delete your card?",
+    "__comment18__": "media owner end wallet",
+
+    "__comment19__": "media owner start Settings",
+    "Security settings text": "These settings are helps you keep your account secure.",
+    "activity log text": "You can save your all activity logs including unusual activity detected.",
+    "Change password text": "Set a unique password to protect your account.",
+    "2 factor text": "Secure your account with 2FA security. When it is activated you will need to enter not only your password, but also a special code using app. You can receive this code by in mobile app.",
+    "login activity text": "Here is your last 6 login activities log.",
+    "ad q": "How many ads want to receive on your screens?",
+    "ad text": "The ads type of category you're going to receive on your screens?",
+    "referral code text1": "Share this code with your friends and you will get",
+    "referral code text2":"for each new user connect to our network",
+    "__comment20__": "media owner end Settings",
+
+    "__comment25__": "media owner start screen info",
+    "screen info name note": "Note: the name of the screen will appear for the advertisers if your screen type is an ad screen",
+    "orientation screen 1": "Is this the correct orientation of your screen ?",
+    "orientation screen 2": "If not, please select the correct orientation of your screen",
+    "screen type text": "If not, please select the correct type",
+    "assign screen text": "Note: if you are not sure  you can do it later",
+    "categories screen text":"Are there the right categories for your ?",
+    "categories note": "Note: please, uncheck the categories and you won't receive ads in these categories",
+    "location text1": "Is this the correct location of your Screen ?",
+    "location text2":"If not, adjust the pin to your correct location",
+    "__comment26__": "media owner end screen info"
+
+
+}

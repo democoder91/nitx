@@ -1,0 +1,499 @@
+<x-media_owner.layout :name="$name">
+    @section('components.media_owner.sidebar')
+        @section('active4', __('btn btn-primary-4'))
+        @section('active-txt-4', __('hp-text-color-primary-1'))
+    @endsection
+    <div class="col-12">
+
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <div class="card pb-0 pb-sm-64">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col flex-grow-1">
+                                <h1 class="mb-8">{{ $folder->name }}</h1>
+                                <h1>{{ __('') }}</h1>
+                            </div>
+
+                            <div class="col hp-flex-none w-auto dropdown">
+                                <a class="btn btn-primary dropdown-toggle" href="javascript:" role="button"
+                                   id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="iconly-Light-Plus" style="margin-right: 0.5em; font-size:1em"></i>
+                                    {{ __('Add') }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" href="newMediaModal" data-bs-toggle="modal"
+                                           data-bs-target="#newMediaModal">{{ __('New Media') }}</a></li>
+                                    <li><a class="dropdown-item" href="#newFolderModal" data-bs-toggle="modal"
+                                           data-bs-target="#newFolderModal">{{ __('New Folder') }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('MOmedia') }}">main</a></li>
+                                @foreach ($folder_path as $path)
+                                    <li class="breadcrumb-item"><a
+                                                href="{{ route('media_owner.get_folder', $path[0]) }}">{{ $path[1] }}</a>
+                                    </li>
+                                @endforeach
+                            </ol>
+                        </nav>
+                        <div class="mt-24 mb-12"></div>
+                        <!--Dividers-->
+                        <!--End of Empty Media Folder-->
+                        @if (count($folders) == 0 && count($media) == 0)
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="row d-flex justify-content-center"
+                                         style="margin-top: 4em; margin-bottom:4em;">
+                                        <img src="{{ asset('assets/img/illustrations/empty-search.svg') }}"
+                                             style="height:8em">
+                                        <h5 style="text-align: center; margin-top: 2em;">{{ __('Empty folder') }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End of Empty Media Folder-->
+                        @else
+                            <div class="row spotlight-group">
+                                @foreach ($folders as $folder)
+                                    <!-- Folder -->
+                                    <div class="col-6 col-md-2">
+                                        <a href="{{ route('media_owner.get_folder', $folder->id) }}"
+                                           class="d-flex align-items-center justify-content-between flex-column">
+                                            <i class="ri-folder-fill hp-text-color-primary-2 folders"
+                                               style=" font-size: 10em;" id="{{ $folder->id }}"></i>
+                                            <h6>{{ $folder->name }}</h6>
+                                        </a>
+                                    </div>
+                                    <!-- End of Folder -->
+                                @endforeach
+                                @foreach ($media as $item)
+                                    <div class="col-6 col-md-2 media" style="margin-top:1em" id="{{ $item->id }}">
+                                        <div class="card card-body" style="padding: 0.2em">
+                                            @if ($item->type == 'image')
+                                                <a class="spotlight"
+                                                   href="{{ $item->compressed_media_path ?? ($item->media_aws_s3_url ?? asset('storage/' . $item->path)) }}">
+                                                    <img src="{{ $item->thumbnail_media_path ?? ($item->media_aws_s3_url ?? asset('storage/' . $item->path)) }}"
+                                                         alt="{{ $item->name }}"
+                                                         style="  width:100%; height:8em; object-fit:cover;">
+                                                </a>
+                                            @elseif($item->type =='video')
+                                                <a class="spotlight" data-media="video"
+                                                   data-src-webm="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
+                                                   data-src-ogg="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
+                                                   data-src-mp4="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
+                                                   data-autoplay="false" data-poster="">
+                                                    <i class="iconly-Light-Play hp-text-color-primary-4"
+                                                       style="font-size: 3em; position:absolute; top:25%; left:40%"></i>
+                                                    <img src="{{$item->thumbnail_media_path ??  asset('/img/ad/nothumbnail.png')}}"
+                                                         style="  width:100%; height:8em; object-fit:cover;">
+                                                </a>
+                                            @endif
+                                            <div class="row">
+                                                <h5 class="col-10 d-inline-block text-truncate" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" title="{{ $item->name }}">
+                                                    {{ $item->name }}</h5>
+                                                <i class="col-2 ri-more-2-fill hp-text-color-dark-0 remix-icon"
+                                                   style="font-size: 15px; margin-top:0.5em; margin-left: 0em"
+                                                   role="button"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--New Folder Modal-->
+    <div class="modal fade" id="newFolderModal" tabindex="-1" aria-labelledby="newFolderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newFolderModalLabel">{{ __('New Folder 📁') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ $create_child_folder_url }}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="folder_name" class="col-form-label">{{ __('Folder Name') }}</label>
+                            <input type="text" name="folder_name" class="form-control" id="folder_name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of New Folder Modal-->
+
+    <!--New Media Modal-->
+    <div class="modal fade" id="newMediaModal" tabindex="-1" aria-labelledby="newMediaModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newMediaModalLabel">{{ __('Upload Media') }}xxxx</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row g-16">
+                        <div class="col-6 hp-flex-none w-auto">
+                            <div
+                                    class="avatar-item d-flex align-items-center justify-content-center avatar-lg bg-primary-4 hp-bg-color-dark-primary rounded-circle">
+                                <i class="ri-file-upload-fill text-primary hp-text-color-dark-primary-2"
+                                   style="font-size: 24px;"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3 class="mb-4 mt-8">{{ __('Upload a file 📺') }}</h3>
+                            <p class="hp-p1-body mb-0 text-black-80 hp-text-color-dark-30">
+                                {{ __('Attach the file below') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-24 mb-12"></div>
+                    <!--Dividers-->
+
+                    <form action="{{ $upload_child_media_url }}" method="POST" enctype="multipart/form-data"
+                          class="dropzone dz-clickable  border-primary-1 bg-primary-4">
+                        @csrf
+                        <div class="dz-default">
+                            <div class=" dz-message">
+                                <h3><strong>{{ __('Nitx is Snapy 🔥') }}</br>
+                                        {{ __('You can Drop & Drag 😎') }}</strong></h3>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-text"
+                                data-bs-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" class="btn btn-primary"
+                                onclick="window.location.reload();">{{ __('Upload File') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of New Media Modal-->
+
+    <div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteMediaModal">{{ __('Delete Media') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="deleteMediaForm" action="" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="folder_name" class="col-form-label">{{ __('delete media text') }}
+                                <strong class="text-danger">delete</strong> </label>
+                            <input type="text" name="confirm_delete" class="form-control" id="confirm_delete">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="renameMediaModal" tabindex="-1" aria-labelledby="renameMediaModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteMediaModal">{{ __('Rename Media') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="renameMediaForm" action="" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="media_name" class="col-form-label">{{ __('rename media text') }}</label>
+                            <input type="text" name="media_name" class="form-control" id="media_name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="renameFolderModal" tabindex="-1" aria-labelledby="renameFolderModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="renameFolderModal">{{ __('Rename Folder') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="renameFolderForm" action="" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="folder_name" class="col-form-label">{{ __('rename folder text') }}</label>
+                            <input type="text" name="folder_name" class="form-control" id="folder_name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="deleteFolderModal" tabindex="-1" aria-labelledby="deleteFolderModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteFolderModal">{{ __('Move Media') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="deleteFolderForm" action="" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="folder_name" class="col-form-label">{{ __('delete folder text') }}
+                                <strong class="text-danger">delete all</strong> </label>
+                            <input type="text" name="confirm_delete" class="form-control" id="confirm_delete">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Move') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="moveFolderModal" tabindex="-1" aria-labelledby="moveFolderModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="moveFolderModal">{{ __('Move Media') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="moveFolderForm" action="" method="post">
+                        @csrf
+                        <select class="form-select" name="parent_folder_id">
+                            <option value="select">{{ __('Select Folder') }}</option>
+                            <option value="null">main</option>
+                            @foreach ($all_folders as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Move') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="moveMediaModal" tabindex="-1" aria-labelledby="moveMediaModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="moveMediaModal">{{ __('Move Media') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="moveMediaForm" action="" method="post">
+                        @csrf
+                        <select class="form-select" name="parent_folder_id">
+                            <option value="select">{{ __('Select Folder') }}</option>
+                            <option value="null">main</option>
+                            @foreach ($all_folders as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text"
+                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Move') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Right Click Menu-->
+    <ul id="rightmenuMedia" class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="display: none">
+        <li>
+            <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal"
+               data-bs-target="#renameMediaModal">
+                <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
+                {{ __('Rename') }}</a>
+            </a>
+        </li>
+        <li><a class="dropdown-item" href="" id="downloadMedia">
+                <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
+                {{ __('Download') }}</a>
+        </li>
+        <li>
+            <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal" data-bs-target="#moveMediaModal">
+                <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
+                {{ __('Move') }}</a>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal"
+               data-bs-target="#deleteMediaModal">
+                <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
+                {{ __('Delete') }}</a>
+            </a>
+        </li>
+    </ul>
+    <ul id="rightmenuFolder" class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="display: none">
+        <li>
+            <a class="dropdown-item" id="#renameFolderModal" data-bs-toggle="modal"
+               data-bs-target="#renameFolderModal">
+                <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
+                {{ __('Rename') }}</a>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" id="#moveFolderModal" data-bs-toggle="modal" data-bs-target="#moveFolderModal">
+                <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
+                {{ __('Move') }}</a>
+            </a>
+        </li>
+        <li><a class="dropdown-item" href="" id="downloadFolder">
+                <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
+                {{ __('Download') }}</a>
+        </li>
+        <li>
+            <a class="dropdown-item" id="#deleteFolderModal" data-bs-toggle="modal"
+               data-bs-target="#deleteFolderModal">
+                <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
+                {{ __('Delete') }}</a>
+            </a>
+        </li>
+    </ul>
+</x-media_owner.layout>
+
+
+<script>
+    var mediaId = null;
+    var folderId = null;
+    document.onclick = hideRightMenu;
+    let medias = document.getElementsByClassName('media');
+    for (let i = 0; i < medias.length; i++) {
+        medias[i].oncontextmenu = rightClickMenuMedia;
+    }
+    let folders = document.getElementsByClassName('folders');
+    for (let i = 0; i < folders.length; i++) {
+        folders[i].oncontextmenu = rightClickMenuFolder;
+    }
+
+    function hideRightMenu() {
+        document.getElementById("rightmenuMedia").style.display = "none"
+        document.getElementById("rightmenuFolder").style.display = "none"
+    }
+
+    function rightClickMenuMedia(e) {
+        e.preventDefault();
+        mediaId = this.id
+        var deleteMediaRoute = '{{ route('media_owner.delete_media', ':id') }}';
+        var renameMediaRoute = '{{ route('media_owner.rename_media', ':id') }}';
+        var downloadMediRoute = '{{ route('media_owner.download_media', ':id') }}';
+        var moveMediaRoute = '{{ route('media_owner.move_media', ':id') }}';
+        deleteMediaRoute = deleteMediaRoute.replace(':id', mediaId);
+        renameMediaRoute = renameMediaRoute.replace(':id', mediaId);
+        downloadMediRoute = downloadMediRoute.replace(':id', mediaId);
+        moveMediaRoute = moveMediaRoute.replace(':id', mediaId);
+        document.querySelector("#deleteMediaForm").action = deleteMediaRoute
+        document.querySelector("#renameMediaForm").action = renameMediaRoute
+        document.querySelector("#moveMediaForm").action = moveMediaRoute
+        document.querySelector("#downloadMedia").href = downloadMediRoute
+        if (document.getElementById("rightmenuMedia").style.display == "block") {
+            hideRightMenu();
+        } else {
+            var menu = document.getElementById("rightmenuMedia")
+            menu.style.display = 'block';
+            menu.style.left = e.pageX - 250 + "px";
+            menu.style.top = e.pageY - 110 + "px";
+        }
+    }
+
+    function rightClickMenuFolder(e) {
+        e.preventDefault();
+        folderId = this.id
+        var renameFolderRoute = '{{ route('media_owner.rename_folder', ':id') }}';
+        var moveFolderRoute = '{{ route('media_owner.move_folder', ':id') }}';
+        var deleteFolderRoute = '{{ route('media_owner.delete_folder', ':id') }}';
+        var downloadFolderRoute = '{{ route('media_owner.download_folder', ':id') }}';
+        renameFolderRoute = renameFolderRoute.replace(':id', folderId);
+        moveFolderRoute = moveFolderRoute.replace(':id', folderId);
+        deleteFolderRoute = deleteFolderRoute.replace(':id', folderId);
+        downloadFolderRoute = downloadFolderRoute.replace(':id', folderId);
+        console.log(downloadFolderRoute)
+        console.log(downloadFolderRoute)
+        console.log(downloadFolderRoute)
+        console.log(downloadFolderRoute)
+        console.log(downloadFolderRoute)
+        document.querySelector("#renameFolderForm").action = renameFolderRoute
+        document.querySelector("#deleteFolderForm").action = deleteFolderRoute
+        document.querySelector("#moveFolderForm").action = moveFolderRoute
+        document.querySelector("#downloadFolder").href = downloadFolderRoute
+        if (document.getElementById("rightmenuFolder").style.display == "block") {
+            hideRightMenu();
+        } else {
+            var menu = document.getElementById("rightmenuFolder")
+            menu.style.display = 'block';
+            menu.style.left = e.pageX - 250 + "px";
+            menu.style.top = e.pageY - 110 + "px";
+        }
+    }
+</script>

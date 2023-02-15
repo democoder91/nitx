@@ -258,7 +258,7 @@
                                                                     style="margin-bottom: 1em">Sequence</span>
                                                                 </div>
                                                                 <div class="col hp-flex-none w-auto">
-                                                                    @if($sequence->status == 'ready')
+                                                                    @if($sequence->status == 'Ready')
                                                                         <span class="badge bg-success-4 hp-bg-dark-success text hp-text-color-dark-success-2 border-success w-auto py-4 fw-medium"
                                                                                 style="margin-bottom: 1em">
                                                                 <strong>{{ucfirst($sequence->status)}}</strong>

@@ -27,19 +27,47 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             // retreive all screens
             $screenGroups = ScreenGroup::all();
-        foreach ($screenGroups as $screenGroup) {
-            $sequence = Sequence::find($screenGroup->sequence_id);
-            if ($sequence != null) {
-                if ($sequence->end_date < now()){
-                    // change screen group sequence id to the default sequence id
-                    $screenGroup->sequence_id = Sequence::where('name', 'Default Sequence')->first()->id;
-                    $screenGroup->update();
+            foreach ($screenGroups as $screenGroup) {
+                $sequence = Sequence::find($screenGroup->sequence_id);
+                if ($sequence != null) {
+                    if ($sequence->end_date < now()){
+                        // change screen group sequence id to the default sequence id
+                        $sequence->status = 'Not Active';
+                        $sequence->update();
+                        $screenGroup->sequence_id = Sequence::where('name', 'Default Sequence')->first()->id;
+                        $screenGroup->update();
+                    }
                 }
+                
             }
+            // get all sequences
+            // foreach sequence
+            // if sequence end date is less than now
+            // change sequence status to not active
+            // else if sequence end date is greater than now
+            // change sequence status to ready
             
+            $sequences = Sequence::all();
+            foreach ($sequences as $sequence) {
+                if ($sequence != null) {
+                    if ($sequence->end_date < now() && $sequence->name != 'Default Sequence'){
+                        // change screen group sequence id to the default sequence id
+                        $sequence->status = 'Not Active';
+                        $sequence->update();
+                    }else if ($sequence->end_date >= now()->date()){
+                        // change screen group sequence id to the default sequence id
+                        $sequence->status = 'Ready';
+                        $sequence->update();
+                }
+                
+            }
         }
         })->everyMinute();
+
+
+
     }
+
 
     /**
      * Register the commands for the application.

@@ -66,12 +66,23 @@ class SequenceController extends Controller
         if (!$sequence && $sequenceId) {
             return null;
         }
+
+
         $sequence->update([
             'name' => $request->sequence_name,
             'start_date' => $request->sequence_start_date,
             'end_date' => $request->sequence_end_date,
             'run_for_ever' => $request->run_for_ever === 'on',
         ]);
+        if ($sequence->end_date < now()){
+            // change screen group sequence id to the default sequence id
+            $sequence->status = 'Not Active';
+            $sequence->update();
+        }else{
+            // change screen group sequence id to the default sequence id
+            $sequence->status = 'Ready';
+            $sequence->update();
+    }
         $daysIds = $request['days'];
         $mediaIds = $request['media'];
         $syncedDays = $sequence->days()->sync($daysIds);

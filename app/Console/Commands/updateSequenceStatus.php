@@ -30,16 +30,15 @@ class updateSequenceStatus extends Command
     public function handle()
     {
         $sequences = Sequence::all();
-        foreach ($sequences as $sequence) {
-            if (!$sequence->run_for_ever) {
-                $date1 = Carbon::createFromFormat('Y-m-d', $sequence->end_date)->startOfDay();
-                $date2 = Carbon::now()->endOfDay();
-                if ($date1->lte($date2)) {
-                    $sequence->update([
-                        'status' => 'ended'
-                    ]);
+        $sequences = Sequence::all();
+            foreach ($sequences as $sequence) {
+                if ($sequence->end_date < now() && $sequence->end_date != Null){
+                    $sequence->status = 'Not Active';
+                    $sequence->update();
+                } else if ($sequence->end_date > now()){
+                    $sequence->status = 'Ready';
+                    $sequence->update();
                 }
             }
-        }
     }
 }

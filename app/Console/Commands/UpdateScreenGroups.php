@@ -36,9 +36,7 @@ class UpdateScreenGroups extends Command
                 $sequence = Sequence::find($screenGroup->sequence_id);
                 if ($sequence != null) {
                     if ($sequence->end_date < now() && $sequence->name != 'Default Sequence'){
-                        // change screen group sequence id to the default sequence id
-                        $sequence->status = 'Not Active';
-                        $sequence->update();
+                        
                         $screenGroup->sequence_id = Sequence::where('name', 'Default Sequence')->first()->id;
                         $screenGroup->update();
                     }

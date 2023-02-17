@@ -55,7 +55,8 @@
                                 <div class="card card-body mt-16">
                                     <form action="{{route('media_owner.store_sequence')}}" method="post"
                                           id="store-sequence-form" data-parsley-validate
-                                          onsubmit="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'sequence-submit-id')">
+                                          {{-- onsubmit="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'sequence-submit-id')" --}}
+                                          >
                                         @csrf
                                         <div class="row">
                                             <div class="list-group" id="list">
@@ -258,11 +259,11 @@
                                                                     style="margin-bottom: 1em">Sequence</span>
                                                                 </div>
                                                                 <div class="col hp-flex-none w-auto">
-                                                                    @if($sequence->status == 'Ready')
+                                                                    @if($sequence->status == 'Ready' || $sequence->status == 'ready')
                                                                         <span class="badge bg-success-4 hp-bg-dark-success text hp-text-color-dark-success-2 border-success w-auto py-4 fw-medium"
                                                                                 style="margin-bottom: 1em">
                                                                 <strong>{{ucfirst($sequence->status)}}</strong>
-                                                                        @elseif($sequence->status == 'live')
+                                                                        @elseif($sequence->status == 'live' || $sequence->status == 'Live')
                                                                         <span class="badge bg-danger-4 hp-bg-dark-danger text hp-text-color-dark-danger-2 border-danger w-auto py-4 fw-medium"
                                                                                 style="margin-bottom: 1em">
                                                                     <strong>{{ucfirst($sequence->status)}}</strong>

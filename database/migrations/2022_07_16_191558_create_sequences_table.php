@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('sequences', function (Blueprint $table) {
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('status')->default('ready');
+            $table->string('status')->default('Ready');
         });
     }
 

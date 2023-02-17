@@ -33,7 +33,7 @@ class updateSequenceStatus extends Command
         $sequences = Sequence::all();
             foreach ($sequences as $sequence) {
                 if ($sequence->end_date < now() && $sequence->end_date != Null){
-                    $sequence->status = 'Not Active';
+                    $sequence->status = 'Ended';
                     $sequence->update();
                 } else if ($sequence->end_date > now()){
                     $sequence->status = 'Ready';

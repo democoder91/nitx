@@ -76,7 +76,7 @@ class SequenceController extends Controller
         ]);
         if ($sequence->end_date < now()) {
             // change screen group sequence id to the default sequence id
-            $sequence->status = 'Not Active';
+            $sequence->status = 'Ended';
             $sequence->update();
         } else {
             // change screen group sequence id to the default sequence id

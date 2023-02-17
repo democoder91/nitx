@@ -119,6 +119,7 @@
                                                                     class="form-control" id="minutes"
                                                                     placeholder="3 m" min="0"
                                                                     value="{{ $record->minutes }}"
+                                                                    data-parsley-range="[1, 60]"
                                                                     required="true">
                                                             </div>
                                                             <div class="col-6 col-sm-4">
@@ -127,6 +128,7 @@
                                                                 <input type="number" name="seconds[]"
                                                                     class="form-control" id="seconds"
                                                                     placeholder="50 s" min="0"
+                                                                    data-parsley-range="[1, 60]"
                                                                     value="{{ $record->seconds }}"
                                                                     required="true">
                                                             </div>
@@ -161,7 +163,7 @@
                                         <label for="sequence_name"
                                             class="col-form-label">{{ __('Sequence Name') }}</label>
                                         <input type="text" name="sequence_name" class="form-control"
-                                            id="sequence_name" required="true" value="{{ $sequence->name }}">
+                                            id="sequence_name" data-parsley-maxlength="128" required="true" value="{{ $sequence->name }}">
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label for="sequence_start_date"
@@ -183,11 +185,19 @@
                                         <label for="folder_name"
                                             class="col-form-label">{{ __('Repeat Time') }}</label>
                                         <div class="row" style="margin-left: 1em">
+                                            <div class="my_parsley_error_container"></div>
+
                                             @foreach (\App\Models\Sequence::getSequenceDays($sequence->id) as $record)
                                                 <div class="col-12 col-md-3 form-check">
                                                     <label class="form-check-label" for="">
                                                         {{ $record->name }}</label>
                                                     <input class="form-check-input" name="days[]"
+                                                    data-parsley-multiple="days"
+                                                    data-parsley-mincheck="1" 
+                                                    data-parsley-errors-container=".my_parsley_error_container" 
+                                                    data-parsley-class-handler=".my_parsley_error_container"
+                                                    data-parsley-required-message="The sequence should have day/days for repetition"
+                                                    required
                                                         type="checkbox" value="{{ $record->sequence_day_id }}"
                                                         id="sequence-{{ $sequence->id }}-day-{{ $record->id }}"
                                                         checked>
@@ -198,8 +208,14 @@
                                                     <label class="form-check-label" for="">
                                                         {{ $record->name }}</label>
                                                     <input class="form-check-input" name="days[]"
-                                                        type="checkbox" value="{{ $record->id }}"
-                                                        id="sequence-{{ $sequence->id }}-day-{{ $record->id }}">
+                                                    type="checkbox" value="{{ $record->id }}"
+                                                    id="sequence-{{ $sequence->id }}-day-{{ $record->id }}"
+                                                        data-parsley-multiple="days"
+                                                        data-parsley-mincheck="1" 
+                                                        data-parsley-errors-container=".my_parsley_error_container" 
+                                                        data-parsley-class-handler=".my_parsley_error_container"
+                                                        data-parsley-required-message="The sequence should have day/days for repetition"
+                                                        required>
                                                 </div>
                                             @endforeach
                                         </div>

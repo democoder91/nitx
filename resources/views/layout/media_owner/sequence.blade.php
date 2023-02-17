@@ -113,6 +113,7 @@
                                                                         <input type="number" name="minutes[]"
                                                                                class="form-control"
                                                                                id="minutes" placeholder="3 m" min="0"
+                                                                               data-parsley-range="[1, 60]"
                                                                                required="true">
                                                                     </div>
                                                                     <div class="col-6 col-sm-4">
@@ -120,6 +121,7 @@
                                                                         <input type="number" name="seconds[]"
                                                                                class="form-control"
                                                                                id="seconds" placeholder="50 s" min="0"
+                                                                               data-parsley-range="[1, 60]"
                                                                                required="true">
                                                                     </div>
                                                                 </div>
@@ -151,7 +153,9 @@
                                                 <div class="mb-3">
                                                     <label for="sequence_name" class="col-form-label">{{ __('Sequence Name') }}</label>
                                                     <input type="text" name="sequence_name" class="form-control"
-                                                           id="sequence_name" required="true">
+                                                           id="sequence_name" 
+                                                           data-parsley-maxlength="128"
+                                                           required="true">
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <label for="sequence_start_date" class="col-form-label">{{ __('Sequence Start') }}</label>
@@ -161,19 +165,28 @@
                                                 <div class="col-12 col-md-6">
                                                     <label for="sequence_end_date" class="col-form-label">{{ __('Sequence End') }}</label>
                                                     <input type="date" name="sequence_end_date" class="form-control"
-                                                           id="sequence_end_date" required="true">
+                                                           id="sequence_end_date" required="true"
+                                                           data-parsley-gte="#sequence_start_date"
+                                                           >
                                                 </div>
                                                 <div class="col-12">
                                                     <label for="folder_name" class="col-form-label">{{ __('Repeat Time') }}</label>
                                                     <div class="row" style="margin-left: 1em">
+                                                        <div class="my_parsley_error_container"></div>
                                                         <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="1">
                                                                 Sunday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="1" id="1">
+                                                                    type="checkbox" value="1" id="1" 
+                                                                    
+                                                                    data-parsley-mincheck="1" 
+                                                                    data-parsley-errors-container=".my_parsley_error_container" 
+                                                                    data-parsley-class-handler=".my_parsley_error_container"
+                                                                    data-parsley-required-message="The sequence should have day/days for repetition"
+                                                                    required>
                                                         </div>
                                                         <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="2">
+                                                            <label class="form-check-label" for="2" >
                                                                 Monday</label>
                                                             <input class="form-check-input" name="days[]"
                                                                    type="checkbox" value="2" id="2">
@@ -182,31 +195,34 @@
                                                             <label class="form-check-label" name="days[]" for="3">
                                                                 Tuesday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="3" id="3">
+                                                                   type="checkbox" value="3" id="3" >
                                                         </div>
                                                         <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="4">
                                                                 Wednesday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="4" id="4">
+                                                                   type="checkbox" value="4" id="4" >
                                                         </div>
                                                         <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="5">
                                                                 Thursday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="5" id="5">
+                                                                   type="checkbox" value="5" id="5" >
                                                         </div>
                                                         <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="6">
+                                                            <label class="form-check-label" for="6" >
                                                                 Friday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="6" id="6">
+                                                                   type="checkbox" value="6" id="6" >
                                                         </div>
                                                         <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="7">
+                                                            <label class="form-check-label" for="7" >
                                                                 Saturday</label>
                                                             <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="7" id="7">
+                                                                    type="checkbox" value="7" id="7" 
+                                                                    
+                                                                    >
+                                                                
                                                         </div>
                                                     </div>
                                                 </div>
@@ -645,4 +661,5 @@
                 </div>
             </div><!-- End ofDelete Modal -->
         @endforeach
+
 </x-media_owner.layout>

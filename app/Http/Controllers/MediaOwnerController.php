@@ -116,7 +116,7 @@ class MediaOwnerController extends Controller
             "screen_groups" => auth()->user()->screenGroups,
             'name' => auth()->user()->name,
             'ready_sequences' => Sequence::getReadySequences()->sortBy('updated_by'),
-            'all_sequences' => Sequence::getAllSequences(auth()->user()->id)->sortBy('updated')->where('status', '!=', 'Not Active'),
+            'all_sequences' => Sequence::getAllSequences(auth()->user()->id)->sortBy('updated')->where('deleted_at', '==', Null)->where('status', '!=', 'Ended'),
         ]);
     }
 

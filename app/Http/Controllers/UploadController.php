@@ -204,7 +204,7 @@ class UploadController extends Controller
         $media = Media::create([
             'name' => $fileName,
             'system_media_name' => $systemFileName,
-            'media_aws_s3_url' => null,
+            'media_aws_s3_url' => $compressedMediaURL,
             'path' => null,
             'compressed_media_path' => $compressedMediaURL,
             'thumbnail_media_path' => $thumbnailMediaURL,

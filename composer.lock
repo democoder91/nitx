@@ -182,16 +182,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.259.0",
+            "version": "3.260.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "096711644ebe5c956a97ef449fa2cb3b66443c25"
+                "reference": "25a14f63cc927d72adad3cc24d6bcdadfe6e0fc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/096711644ebe5c956a97ef449fa2cb3b66443c25",
-                "reference": "096711644ebe5c956a97ef449fa2cb3b66443c25",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/25a14f63cc927d72adad3cc24d6bcdadfe6e0fc7",
+                "reference": "25a14f63cc927d72adad3cc24d6bcdadfe6e0fc7",
                 "shasum": ""
             },
             "require": {
@@ -270,9 +270,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.259.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.260.0"
             },
-            "time": "2023-02-17T19:21:38+00:00"
+            "time": "2023-02-21T20:26:17+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -406,16 +406,16 @@
         },
         {
             "name": "bref/bref",
-            "version": "1.7.19",
+            "version": "1.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brefphp/bref.git",
-                "reference": "4089bee64433fde7c15b14e971e453eaa217ad63"
+                "reference": "cf01e31c5c4ce3a3c29d4498921d929b5c149993"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brefphp/bref/zipball/4089bee64433fde7c15b14e971e453eaa217ad63",
-                "reference": "4089bee64433fde7c15b14e971e453eaa217ad63",
+                "url": "https://api.github.com/repos/brefphp/bref/zipball/cf01e31c5c4ce3a3c29d4498921d929b5c149993",
+                "reference": "cf01e31c5c4ce3a3c29d4498921d929b5c149993",
                 "shasum": ""
             },
             "require": {
@@ -468,7 +468,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brefphp/bref/issues",
-                "source": "https://github.com/brefphp/bref/tree/1.7.19"
+                "source": "https://github.com/brefphp/bref/tree/1.7.20"
             },
             "funding": [
                 {
@@ -480,7 +480,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-15T10:55:10+00:00"
+            "time": "2023-02-21T10:04:43+00:00"
         },
         {
             "name": "bref/laravel-bridge",
@@ -2368,16 +2368,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.52.0",
+            "version": "v9.52.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e"
+                "reference": "cf021e5e9edf854f832b191ad5168e9f2327cdf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e",
-                "reference": "eb85cd9d72e5bfa54b4d0d9040786f26d6184a9e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/cf021e5e9edf854f832b191ad5168e9f2327cdf7",
+                "reference": "cf021e5e9edf854f832b191ad5168e9f2327cdf7",
                 "shasum": ""
             },
             "require": {
@@ -2562,7 +2562,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-02-14T14:51:14+00:00"
+            "time": "2023-02-21T18:19:59+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -2760,16 +2760,16 @@
         },
         {
             "name": "laravel/telescope",
-            "version": "v4.13.2",
+            "version": "v4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/telescope.git",
-                "reference": "34a259cf19a73cc3b9b31f49c3c85595afcfbb70"
+                "reference": "fafad2e32883eb9dc03b646d0f82b2987e8af880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/telescope/zipball/34a259cf19a73cc3b9b31f49c3c85595afcfbb70",
-                "reference": "34a259cf19a73cc3b9b31f49c3c85595afcfbb70",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/fafad2e32883eb9dc03b646d0f82b2987e8af880",
+                "reference": "fafad2e32883eb9dc03b646d0f82b2987e8af880",
                 "shasum": ""
             },
             "require": {
@@ -2823,22 +2823,22 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/telescope/issues",
-                "source": "https://github.com/laravel/telescope/tree/v4.13.2"
+                "source": "https://github.com/laravel/telescope/tree/v4.14.0"
             },
-            "time": "2023-02-16T15:32:51+00:00"
+            "time": "2023-02-21T15:49:06+00:00"
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.8.0",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "74d0b287cc4ae65d15c368dd697aae71d62a73ad"
+                "reference": "04a2d3bd0d650c0764f70bf49d1ee39393e4eb10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/74d0b287cc4ae65d15c368dd697aae71d62a73ad",
-                "reference": "74d0b287cc4ae65d15c368dd697aae71d62a73ad",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
+                "reference": "04a2d3bd0d650c0764f70bf49d1ee39393e4eb10",
                 "shasum": ""
             },
             "require": {
@@ -2891,9 +2891,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.8.0"
+                "source": "https://github.com/laravel/tinker/tree/v2.8.1"
             },
-            "time": "2023-01-10T18:03:30+00:00"
+            "time": "2023-02-15T16:40:09+00:00"
         },
         {
             "name": "laravel/ui",
@@ -9217,16 +9217,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.20.2",
+            "version": "v1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c"
+                "reference": "758a914fc4da41f3f6ca5522c85902181b228bd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/5ae072b182b1efbec927409e8a3ce3b1078cc42c",
-                "reference": "5ae072b182b1efbec927409e8a3ce3b1078cc42c",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/758a914fc4da41f3f6ca5522c85902181b228bd1",
+                "reference": "758a914fc4da41f3f6ca5522c85902181b228bd1",
                 "shasum": ""
             },
             "require": {
@@ -9274,7 +9274,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-02-08T20:22:21+00:00"
+            "time": "2023-02-16T19:16:27+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -10933,16 +10933,16 @@
         },
         {
             "name": "spatie/backtrace",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/backtrace.git",
-                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b"
+                "reference": "7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/backtrace/zipball/4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
-                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
+                "url": "https://api.github.com/repos/spatie/backtrace/zipball/7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1",
+                "reference": "7b34fee6c1ad45f8ee0498d17cd8ea9a076402c1",
                 "shasum": ""
             },
             "require": {
@@ -10978,8 +10978,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/backtrace/issues",
-                "source": "https://github.com/spatie/backtrace/tree/1.2.1"
+                "source": "https://github.com/spatie/backtrace/tree/1.2.2"
             },
             "funding": [
                 {
@@ -10991,7 +10990,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2021-11-09T10:57:15+00:00"
+            "time": "2023-02-21T08:29:12+00:00"
         },
         {
             "name": "spatie/flare-client-php",

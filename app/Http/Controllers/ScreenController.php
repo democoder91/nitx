@@ -75,7 +75,7 @@ class ScreenController extends Controller
         event(new ScreenData($request->screenId, Crypt::encrypt($screen->id)));
         event(new BroadcastScreenMedia($screen->id, ScreenGroup::fetchScreenGroupSequenceMediaWithTheirDuration($screen->sequence_id)));
         Mail::to(auth()->user()->email)->send(new newScreen($screen->name));
-        return redirect()->route('MOScreens')->withCookie(cookie()->forever('screenId', Crypt::encrypt($screen->id), '/'));;
+        return redirect()->route('MOScreens');
     }
 
     public function getScreensData(Request $request)

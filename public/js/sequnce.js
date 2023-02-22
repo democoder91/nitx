@@ -1,7 +1,13 @@
-$('#minutes').on('change', function() {
+$('#minutes,#seconds').on('change', function() {
     var minutes = $('#minutes').val();
     var seconds = $('#seconds').val();
-    if ((minutes == 0 && seconds == 0) || (minutes == '' && seconds == '')) {
+    if (
+        (minutes == 0 && seconds == 0) || 
+        (minutes == '' && seconds == '') ||
+        (minutes == 0 && seconds == '') ||
+        (minutes == '' && seconds == 0) 
+
+    ) {
         // add required attribute to minutes and seconds
         $('#minutes').attr('required', 'required');
         $('#seconds').attr('required', 'required');

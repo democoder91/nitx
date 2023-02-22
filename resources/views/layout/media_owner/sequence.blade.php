@@ -57,36 +57,36 @@
                                           id="store-sequence-form" data-parsley-validate
                                           {{-- onsubmit="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'sequence-submit-id')" --}}
                                           >
-                                        @csrf
-                                        <div class="row">
+                                          @csrf
+                                          <div class="row">
                                             <div class="list-group" id="list">
                                                 <div class="list-group-item list-group-item-action active"
-                                                     aria-current="true">
-                                                    <div class="row">
-                                                        <h4 class="col-8" style="margin-top: 0.5em">{{ __('Sequence Content') }}</h4>
-                                                        <a id="remove-media-to-sequence-btn" type="button"
-                                                           class="col-2 btn btn-primary">
+                                                aria-current="true">
+                                                <div class="row">
+                                                    <h4 class="col-8" style="margin-top: 0.5em">{{ __('Sequence Content') }}</h4>
+                                                    <a id="remove-media-to-sequence-btn" type="button"
+                                                    class="col-2 btn btn-primary">
                                                             <i class="iconly-Light-Delete" style="font-size:2em"
-                                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                               title="Delete Slot from Sequence"></i>
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            title="Delete Slot from Sequence"></i>
                                                         </a>
                                                         <a id="add-media-to-sequence-btn" type="button"
-                                                           class="col-2 btn btn-primary">
-                                                            <i class="iconly-Light-Plus" style="font-size:2em"
-                                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                               title="Add Slot to Sequence"></i>
-                                                        </a>
-                                                    </div>
+                                                        class="col-2 btn btn-primary">
+                                                        <i class="iconly-Light-Plus" style="font-size:2em"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        title="Add Slot to Sequence"></i>
+                                                    </a>
                                                 </div>
-                                                <ul id="SequenceMedia" class="rounded-bottom">
-                                                    <!--Sequence Slot-->
-                                                    <li class="list-group-item" data-id="1">
-                                                        <div class="row">
-                                                            <div class="col-1 handle" style="margin-top: 1em;">
-                                                                <a><i class="ri-arrow-up-down-fill"
-                                                                      style="font-size:2em" data-bs-toggle="tooltip"
-                                                                      data-bs-placement="bottom"
-                                                                      title="Drag up & down "></i></a>
+                                            </div>
+                                            <ul id="SequenceMedia" class="rounded-bottom">
+                                                <!--Sequence Slot-->
+                                                <li class="list-group-item" data-id="1">
+                                                    <div class="row">
+                                                        <div class="col-1 handle" style="margin-top: 1em;">
+                                                            <a><i class="ri-arrow-up-down-fill"
+                                                                style="font-size:2em" data-bs-toggle="tooltip"
+                                                                data-bs-placement="bottom"
+                                                                title="Drag up & down "></i></a>
                                                             </div>
                                                             <div class="col-11">
                                                                 <div class="row">
@@ -94,15 +94,15 @@
                                                                         <div class="card" style="max-width: 340px;">
                                                                             <div class="col-md-12">
                                                                                 <a href="" data-bs-toggle="modal"
-                                                                                   data-bs-target="#mediaModal">
-                                                                                    <img class="img-fluid rounded"
-                                                                                         id="media-preview-1"
-                                                                                         style="width:100%; height:13em; object-fit:cover;"
-                                                                                         src="{{ asset('/img/ad/nomedia.png') }}">
-                                                                                    <div class="media-inputs">
+                                                                                data-bs-target="#mediaModal">
+                                                                                <img class="img-fluid rounded"
+                                                                                id="media-preview-1"
+                                                                                style="width:100%; height:13em; object-fit:cover;"
+                                                                                src="{{ asset('/img/ad/nomedia.png') }}">
+                                                                                <div class="media-inputs">
                                                                                         <input type="hidden"
-                                                                                               name="media[]"
-                                                                                               class="media-preview-1">
+                                                                                        name="media[]"
+                                                                                        class="media-preview-1">
                                                                                     </div>
                                                                                 </a>
                                                                             </div>
@@ -111,18 +111,18 @@
                                                                     <div class="col-6 col-sm-4">
                                                                         <label for="minutes" class="col-form-label">{{ __('Minutes') }}</label>
                                                                         <input type="number" name="minutes[]"
-                                                                               class="form-control"
-                                                                               id="minutes" placeholder="3 m" min="0"
-                                                                               data-parsley-range="[1, 60]"
-                                                                               required="true">
+                                                                        class="form-control"
+                                                                        id="minutes" placeholder="3 m" min="0"
+                                                                        
+                                                                        required="true">
                                                                     </div>
                                                                     <div class="col-6 col-sm-4">
                                                                         <label for="seconds" class="col-form-label">{{ __('Seconds') }}</label>
                                                                         <input type="number" name="seconds[]"
-                                                                               class="form-control"
-                                                                               id="seconds" placeholder="50 s" min="0"
-                                                                               data-parsley-range="[1, 60]"
-                                                                               required="true">
+                                                                        class="form-control"
+                                                                        id="seconds" placeholder="50 s" min="0"
+                                                                        
+                                                                        required="true">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -132,20 +132,20 @@
                                                 <div class="col-12">
                                                     <div class="row">
                                                         <a id="remove-media-to-sequence-btn" type="button"
-                                                           class="col-12 col-md-5 btn btn-ghost btn-dark" style="margin: 0.6em">
-                                                            <i class="iconly-Light-Delete" style="font-size:2em"
-                                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                               title="Delete Slot from Sequence"></i>
-                                                        </a>
-                                                        <a id="add-media-to-sequence-btn" type="button"
-                                                           class="col-12 col-md-5  btn btn-ghost btn-dark" style="margin: 0.6em">
-                                                            <i class="iconly-Light-Plus" style="font-size:2em"
-                                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                               title="Add Slot to Sequence"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                                        class="col-12 col-md-5 btn btn-ghost btn-dark" style="margin: 0.6em">
+                                                        <i class="iconly-Light-Delete" style="font-size:2em"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        title="Delete Slot from Sequence"></i>
+                                                    </a>
+                                                    <a id="add-media-to-sequence-btn" type="button"
+                                                    class="col-12 col-md-5  btn btn-ghost btn-dark" style="margin: 0.6em">
+                                                    <i class="iconly-Light-Plus" style="font-size:2em"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="Add Slot to Sequence"></i>
+                                                </a>
                                             </div>
+                                        </div>
+                                    </div>
                                             <div class="mt-24 mb-12"></div><!--Dividers-->
                                             <!--Sequence Settings--->
                                             <h5 class="modal-title" id="newfoldermodalLabel">Sequence Settings:</h5>
@@ -153,21 +153,21 @@
                                                 <div class="mb-3">
                                                     <label for="sequence_name" class="col-form-label">{{ __('Sequence Name') }}</label>
                                                     <input type="text" name="sequence_name" class="form-control"
-                                                           id="sequence_name" 
-                                                           data-parsley-maxlength="128"
-                                                           required="true">
+                                                    id="sequence_name" 
+                                                    data-parsley-maxlength="128"
+                                                    required="true">
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <label for="sequence_start_date" class="col-form-label">{{ __('Sequence Start') }}</label>
                                                     <input type="date" name="sequence_start_date" class="form-control"
-                                                           id="sequence_start_date" required="true">
+                                                    id="sequence_start_date" required="true">
                                                 </div>
                                                 <div class="col-12 col-md-6">
                                                     <label for="sequence_end_date" class="col-form-label">{{ __('Sequence End') }}</label>
                                                     <input type="date" name="sequence_end_date" class="form-control"
-                                                           id="sequence_end_date" required="true"
-                                                           data-parsley-gte="#sequence_start_date"
-                                                           >
+                                                    id="sequence_end_date" required="true"
+                                                    data-parsley-gte="#sequence_start_date"
+                                                    >
                                                 </div>
                                                 <div class="col-12">
                                                     <label for="folder_name" class="col-form-label">{{ __('Repeat Time') }}</label>
@@ -176,63 +176,63 @@
                                                         <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="1">
                                                                 Sunday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                    type="checkbox" value="1" id="1" 
-                                                                    
-                                                                    data-parsley-mincheck="1" 
-                                                                    data-parsley-errors-container=".my_parsley_error_container" 
-                                                                    data-parsley-class-handler=".my_parsley_error_container"
-                                                                    data-parsley-required-message="The sequence should have day/days for repetition"
-                                                                    required>
-                                                        </div>
-                                                        <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="2" >
-                                                                Monday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="2" id="2">
-                                                        </div>
-                                                        <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" name="days[]" for="3">
-                                                                Tuesday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="3" id="3" >
-                                                        </div>
-                                                        <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="4">
-                                                                Wednesday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="4" id="4" >
-                                                        </div>
-                                                        <div class="col-12 col-md-3 form-check">
+                                                                <input class="form-check-input" name="days[]"
+                                                                type="checkbox" value="1" id="1" 
+                                                                
+                                                                data-parsley-mincheck="1" 
+                                                                data-parsley-errors-container=".my_parsley_error_container" 
+                                                                data-parsley-class-handler=".my_parsley_error_container"
+                                                                data-parsley-required-message="The sequence should have day/days for repetition"
+                                                                required>
+                                                            </div>
+                                                            <div class="col-12 col-md-3 form-check">
+                                                                <label class="form-check-label" for="2" >
+                                                                    Monday</label>
+                                                                    <input class="form-check-input" name="days[]"
+                                                                    type="checkbox" value="2" id="2">
+                                                                </div>
+                                                                <div class="col-12 col-md-3 form-check">
+                                                                    <label class="form-check-label" name="days[]" for="3">
+                                                                        Tuesday</label>
+                                                                        <input class="form-check-input" name="days[]"
+                                                                        type="checkbox" value="3" id="3" >
+                                                                    </div>
+                                                                    <div class="col-12 col-md-3 form-check">
+                                                                        <label class="form-check-label" for="4">
+                                                                            Wednesday</label>
+                                                                            <input class="form-check-input" name="days[]"
+                                                                            type="checkbox" value="4" id="4" >
+                                                                        </div>
+                                                                        <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="5">
                                                                 Thursday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="5" id="5" >
-                                                        </div>
+                                                                <input class="form-check-input" name="days[]"
+                                                                type="checkbox" value="5" id="5" >
+                                                            </div>
                                                         <div class="col-12 col-md-3 form-check">
                                                             <label class="form-check-label" for="6" >
                                                                 Friday</label>
-                                                            <input class="form-check-input" name="days[]"
-                                                                   type="checkbox" value="6" id="6" >
-                                                        </div>
-                                                        <div class="col-12 col-md-3 form-check">
-                                                            <label class="form-check-label" for="7" >
-                                                                Saturday</label>
-                                                            <input class="form-check-input" name="days[]"
+                                                                <input class="form-check-input" name="days[]"
+                                                                type="checkbox" value="6" id="6" >
+                                                            </div>
+                                                            <div class="col-12 col-md-3 form-check">
+                                                                <label class="form-check-label" for="7" >
+                                                                    Saturday</label>
+                                                                    <input class="form-check-input" name="days[]"
                                                                     type="checkbox" value="7" id="7" 
                                                                     
                                                                     >
-                                                                
+                                                                    
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mt-24 mb-12"></div><!--Dividers-->
-                                                <div class="row align-items-center justify-content-between">
-                                                    <div class="col hp-flex-none w-auto"></div>
+                                                        <div class="mt-24 mb-12"></div><!--Dividers-->
+                                                        <div class="row align-items-center justify-content-between">
+                                                            <div class="col hp-flex-none w-auto"></div>
                                                     <div class="col hp-flex-none w-auto">
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox"
-                                                                   id="run-for-ever-switch" name="run_for_ever">
+                                                            id="run-for-ever-switch" name="run_for_ever">
                                                             <label class="form-check-label" for="run-for-ever-switch">
                                                                 <span class="ms-12">{{ __('Run forever ♾️') }}</span>
                                                             </label>
@@ -251,27 +251,27 @@
                             <div class="row">
                                 <!--Sequence Card-->
                                 @if(count($sequences) === 0)
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="row d-flex justify-content-center"
-                                                 style="margin-top: 4em; margin-bottom:4em;">
-                                                <img src="{{ asset('assets/img/illustrations/empty-groups.svg') }}"
-                                                     style="height:8em">
-                                                <h5 style="text-align: center; margin-top: 2em;">there are no sequences!</h5>
-                                            </div>
-                                        </div>
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="row d-flex justify-content-center"
+                                        style="margin-top: 4em; margin-bottom:4em;">
+                                        <img src="{{ asset('assets/img/illustrations/empty-groups.svg') }}"
+                                        style="height:8em">
+                                        <h5 style="text-align: center; margin-top: 2em;">there are no sequences!</h5>
                                     </div>
-                                @else
-                                    @foreach($sequences as $sequence)
-                                    @if($sequence->name != "Default Sequence")
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" style="margin: 1em 0em 1em">
+                                </div>
+                            </div>
+                            @else
+                            @foreach($sequences as $sequence)
+                            @if($sequence->name != "Default Sequence")
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" style="margin: 1em 0em 1em">
                                             <div class="card hp-card-1 border border-black-60">
                                                 <div class="card-body py-16">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="row align-items-center justify-content-between">
                                                                 <div class="col hp-flex-none w-auto">
-                                                                <span class="badge bg-primary-4 hp-bg-dark-primary text-primary hp-text-color-dark-primary-2 border-none w-auto py-4 fw-medium"
+                                                                    <span class="badge bg-primary-4 hp-bg-dark-primary text-primary hp-text-color-dark-primary-2 border-none w-auto py-4 fw-medium"
                                                                     style="margin-bottom: 1em">Sequence</span>
                                                                 </div>
                                                                 <div class="col hp-flex-none w-auto">
@@ -524,9 +524,9 @@
                                                                 </div>
                                                                 <div class="col-6 col-sm-4">
                                                                     <label for="minutes"
-                                                                           class="col-form-label">Minutes</label>
+                                                                           class="col-form-label ">Minutes</label>
                                                                     <input type="number" name="minutes[]"
-                                                                           class="form-control"
+                                                                           class="form-control time"
                                                                            id="minutes" placeholder="3 m" min="0"
                                                                            value="{{$record->minutes}}"
                                                                            required="true">
@@ -535,11 +535,17 @@
                                                                     <label for="seconds"
                                                                            class="col-form-label">Seconds</label>
                                                                     <input type="number" name="seconds[]"
-                                                                           class="form-control"
+                                                                           class="form-control time"
                                                                            id="seconds" placeholder="50 s" min="0"
                                                                            value="{{$record->seconds}}"
                                                                            required="true">
                                                                 </div>
+                                                                
+                                                                <script>
+                                                                $(".time").on('change', function() {
+                                                                    alert('changed');
+                                                                });
+                                                                </script>
                                                             </div>
                                                         </div>
                                                     </div>

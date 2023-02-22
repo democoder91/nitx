@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -198,6 +199,7 @@
 
 <!-- Plugin -->
 <script src="{{asset('assets/js/plugin/jquery.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/parsley.min.js')}}"></script>
 <script src="{{asset('assets/js/plugin/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/js/plugin/swiper-bundle.min.js')}}"></script>
 <script src="{{asset('assets/js/plugin/jquery.mask.min.js')}}"></script>
@@ -236,10 +238,10 @@
         crossorigin="anonymous"></script>
 
 <script src="{{asset('/js/file-explore.js')}}"></script>
+<script src="{{ asset('js\sequnce.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"
-        integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 
 <script>

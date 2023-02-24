@@ -162,7 +162,7 @@ class Sequence extends Model
     {
         return DB::table('media')
             ->select('*')
-            ->where('id', '=', 1)
+            ->where('id', '=', Sequence::where('name', '=', 'Default Sequence')->first()->id)
             ->get();
     }
 

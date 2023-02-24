@@ -2,12 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Events\BroadcastScreenMedia;
 use Illuminate\Console\Command;
 
 use App\Events\ScreenAds;
 use App\Jobs\CheckForExpiredSequences;
 use App\Models\ScreenGroup;
 use App\Models\Sequence;
+use App\Services\SequenceService;
+
 class UpdateScreenGroups extends Command
 {
     /**
@@ -31,17 +34,14 @@ class UpdateScreenGroups extends Command
      */
     public function handle()
     {
-        $screenGroups = ScreenGroup::all();
-            foreach ($screenGroups as $screenGroup) {
-                $sequence = Sequence::find($screenGroup->sequence_id);
-                if ($sequence != null) {
-                    if ($sequence->end_date < now() && $sequence->name != 'Default Sequence'){
-                        
-                        $screenGroup->sequence_id = Sequence::where('name', 'Default Sequence')->first()->id;
-                        $screenGroup->update();
-                    }
-                }
-                
-            }
+        // fetch  screen groups where is_active = 1 and sequence_id is not null
+        $screenGroups = ScreenGroup::where('is_active', 1)->whereNotNull('sequence_id')->get();
+
+        foreach ($screenGroups as $screenGroup) {
+            $sequence = Sequence::find($screenGroup->sequence_id);
+            SequenceService::updateSequenceScreenGroupsAndScreens($sequence);
+        }
+            
+            
     }
 }

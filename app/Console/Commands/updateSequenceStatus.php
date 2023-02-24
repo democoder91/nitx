@@ -2,9 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\Constants\Status;
+use App\Events\BroadcastScreenMedia;
+use App\Models\ScreenGroup;
 use App\Models\Sequence;
+use App\Services\SequenceService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class updateSequenceStatus extends Command
 {
@@ -32,13 +37,10 @@ class updateSequenceStatus extends Command
         $sequences = Sequence::all();
         $sequences = Sequence::all();
             foreach ($sequences as $sequence) {
-                if ($sequence->end_date < now() && $sequence->end_date != Null){
-                    $sequence->status = 'Ended';
-                    $sequence->update();
-                } else if ($sequence->end_date > now()){
-                    $sequence->status = 'Ready';
-                    $sequence->update();
-                }
+                SequenceService::updateSequenceStatus($sequence);
+                $sequence->update();
+
+                
             }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Status;
 use App\Http\Requests\GetChildFolderPage;
 use App\Models\Category;
 use App\Models\Folder;
@@ -116,7 +117,14 @@ class MediaOwnerController extends Controller
             "screen_groups" => auth()->user()->screenGroups,
             'name' => auth()->user()->name,
             'ready_sequences' => Sequence::getReadySequences()->sortBy('updated_by'),
-            'all_sequences' => Sequence::getAllSequences(auth()->user()->id)->sortBy('updated')->where('deleted_at', '==', Null)->where('status', '!=', 'Ended'),
+            'all_sequences' => Sequence::getAllSequences(auth()->user()->id)
+            ->sortBy('id')
+            ->where('deleted_at', '==', Null)
+            ->filter(function ($sequence) {
+                return $sequence->status == Status::Ready->value || $sequence->status == Status::Live->value;
+            })
+            // ->where('status', '=', Status::Ready->value )
+            // ->orwhere('status', '=', Status::Live->value )
         ]);
     }
 

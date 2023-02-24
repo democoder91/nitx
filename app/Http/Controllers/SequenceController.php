@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Status;
+use App\Enums\SequenceStatus;
 use App\Events\BroadcastScreenMedia;
 use App\Http\Requests\StoreSequenceRequest;
 use App\Http\Requests\UpdateSequenceRequest;
@@ -9,6 +11,7 @@ use App\Models\Folder;
 use App\Models\Screen;
 use App\Models\ScreenGroup;
 use App\Models\Sequence;
+use App\Services\SequenceService;
 use Carbon\Carbon;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
@@ -24,13 +27,30 @@ class SequenceController extends Controller
 
     public function storeSequence(StoreSequenceRequest $request)
     {
+
+        // check if the request has run for ever key
+         
+        if ($request->has('run_for_ever')) {
+            if ($request->run_for_ever === 'on') {
+                $end_date = null;
+            }else{
+                $end_date = $request->sequence_end_date;
+            }
+        }else{
+            $end_date = $request->sequence_end_date;
+        }
         $sequence = Sequence::create([
             'name' => $request->sequence_name,
             'start_date' => $request->sequence_start_date,
-            'end_date' => $request->sequence_end_date,
+            'end_date' => $end_date,
             'run_for_ever' => $request['run_for_ever'] === 'on',
             'media_owner_id' => auth()->user()->id
         ]);
+        // if the sequence runs for ever then the end date is null
+
+        $sequence = SequenceService::updateSequenceStatus($sequence);
+        $sequence->update();
+
         $daysIds = $request['days'];
         foreach ($daysIds as $dayId) {
             $sequence->days()->attach($dayId);
@@ -62,28 +82,34 @@ class SequenceController extends Controller
 
     public function updateSequence(UpdateSequenceRequest $request, $sequenceId)
     {
+        // die and dump the request
         $sequence = Sequence::find($sequenceId);
         if (!$sequence && $sequenceId) {
             return null;
         }
-
-
+        // create a sequence object to update
+        // IF THE SEQUENCE RUNS FOR EVER THEN THE END DATE IS NULL
+        if ($request->has('run_for_ever')) {
+            if ($request->run_for_ever === 'on') {
+                $end_date = null;
+            }else{
+                $end_date = $request->sequence_end_date;
+            }
+        }else{
+            $end_date = $request->sequence_end_date;
+        }
+        
         $sequence->update([
             'name' => $request->sequence_name,
             'start_date' => $request->sequence_start_date,
-            'end_date' => $request->sequence_end_date,
+            'end_date' => $end_date,
             'run_for_ever' => $request->run_for_ever === 'on',
         ]);
-        if ($sequence->end_date < now()) {
-            // change screen group sequence id to the default sequence id
-            $sequence->status = 'Ended';
-            $sequence->update();
-        } else {
-            // change screen group sequence id to the default sequence id
-            $sequence->status = 'Ready';
-            $sequence->update();
-        }
+        $sequence = SequenceService::updateSequenceStatus($sequence);
+        $sequence->update();
         
+        SequenceService::updateSequenceScreenGroupsAndScreens($sequence);           
+
         $daysIds = $request['days'];
         $mediaIds = $request['media'];
         $syncedDays = $sequence->days()->sync($daysIds);

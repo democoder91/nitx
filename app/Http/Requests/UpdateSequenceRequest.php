@@ -14,6 +14,14 @@ class UpdateSequenceRequest extends FormRequest
      *
      * @return bool
      */
+
+    // variable to hold the rules
+    public array $rules = [
+        'minutes.*' => 'numeric|min:0|max:60',
+        'seconds.*' => 'numeric|min:0|max:60',
+        'sequence_name' => 'max:128',
+        'sequence_start_date' => 'date',
+    ];
     public function authorize(Request $request)
     {
         $sequence = Sequence::find($request->id);
@@ -32,14 +40,19 @@ class UpdateSequenceRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            'minutes.*' => 'numeric|min:0|max:60',
-            'seconds.*' => 'numeric|min:0|max:60',
-            'sequence_name' => 'max:128',
-            'sequence_start_date' => 'date',
-        ];
+        // if the request has value in minutes or seconds, then the other one should not be required
+        $minutes = $request->input('minutes');
+        $seconds = $request->input('seconds');
+        if ($minutes != null && $minutes != '' && $minutes != 0) {
+            $this->rules['seconds.*'] = 'nullable|numeric|min:0|max:60';
+        }
+        if ($seconds != null && $seconds != '' && $seconds != 0) {
+            $this->rules['minutes.*'] = 'nullable|numeric|min:0|max:60';
+        }
+
+        return $this->rules;
     }
 
     public function messages()

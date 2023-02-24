@@ -275,11 +275,11 @@
                                                                     style="margin-bottom: 1em">Sequence</span>
                                                                 </div>
                                                                 <div class="col hp-flex-none w-auto">
-                                                                    @if($sequence->status == 'Ready' || $sequence->status == 'ready')
+                                                                    @if($sequence->status == App\Constants\Status::Ready->value)
                                                                         <span class="badge bg-success-4 hp-bg-dark-success text hp-text-color-dark-success-2 border-success w-auto py-4 fw-medium"
                                                                                 style="margin-bottom: 1em">
                                                                 <strong>{{ucfirst($sequence->status)}}</strong>
-                                                                        @elseif($sequence->status == 'live' || $sequence->status == 'Live')
+                                                                        @elseif($sequence->status == App\Constants\Status::Live->value)
                                                                         <span class="badge bg-danger-4 hp-bg-dark-danger text hp-text-color-dark-danger-2 border-danger w-auto py-4 fw-medium"
                                                                                 style="margin-bottom: 1em">
                                                                     <strong>{{ucfirst($sequence->status)}}</strong>

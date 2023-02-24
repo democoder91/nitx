@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\Status;
 use App\Models\MediaOwner;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class DefaultSequence extends Seeder
         if ($defaultSequence == null) {
             DB::table('sequences')->insert([
                 'name' => 'Default Sequence',
-                'status' => 'live',
+                'status' => Status::Live->value,
                 //default media owner id
                 'media_owner_id' => Null,
                 'created_at' => Carbon::now(),

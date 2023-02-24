@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Status;
 use App\Events\BroadcastScreenMedia;
 use App\Events\ScreenAds;
 use App\Events\ScreenData;
@@ -121,7 +122,7 @@ class ScreenGroupController extends Controller
             }
         } else {
             $sequence = Sequence::find($screenGroup->sequence_id);
-            $sequence->status = "live";
+            $sequence->status = Status::Live->value;
             $sequence->save();
             foreach (ScreenGroup::getAllScreensByScreenGroup($screenGroup->id) as $screen) {
                 $screenId = $screen->id;
@@ -133,10 +134,10 @@ class ScreenGroupController extends Controller
         }
         foreach (Sequence::all() as $sequence) {
             if (Sequence::checkIfSequenceIsLinkedToScreenGroup($sequence->id) >= 1) {
-                $sequence->status = "live";
+                $sequence->status = Status::Live->value;
                 $sequence->save();
             } else {
-                $sequence->status = "ready";
+                $sequence->status = Status::Ready->value;
                 $sequence->save();
             }
         }

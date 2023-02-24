@@ -150,7 +150,6 @@
                 @endif
             </div>
         @endforeach
-
         @foreach ($medias as $media)
             <div class="images fade">
                 @if ($media->type == "image")

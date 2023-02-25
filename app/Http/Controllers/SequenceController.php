@@ -30,19 +30,23 @@ class SequenceController extends Controller
 
         // check if the request has run for ever key
          
-        if ($request->has('run_for_ever')) {
-            if ($request->run_for_ever === 'on') {
-                $end_date = null;
-            }else{
-                $end_date = $request->sequence_end_date;
-            }
-        }else{
-            $end_date = $request->sequence_end_date;
-        }
+        // if ($request->has('run_for_ever')) {
+        //     // if the request run for ever is not null
+        //     if ($request->run_for_ever != null) {
+        //         if ($request->run_for_ever === 'on') {
+        //             $end_date = null;
+        //         }else{
+        //             $end_date = $request->sequence_end_date;
+        //         }
+        //     }
+        
+        // }else{
+        //     $end_date = $request->sequence_end_date;
+        // }
         $sequence = Sequence::create([
             'name' => $request->sequence_name,
             'start_date' => $request->sequence_start_date,
-            'end_date' => $end_date,
+            'end_date' => $request->sequence_end_date,
             'run_for_ever' => $request['run_for_ever'] === 'on',
             'media_owner_id' => auth()->user()->id
         ]);

@@ -13,6 +13,7 @@ use App\Models\ScreenGroup;
 use App\Models\Sequence;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class ScreenGroupController extends Controller
 {
@@ -31,7 +32,7 @@ class ScreenGroupController extends Controller
         ]);
         if ($screenGroup->sequence_id) {
             $sequence = Sequence::find($screenGroup->sequence_id);
-            $sequence->update(['status' => 'live']);
+            $sequence->update(['status' => Status::Live->value]);
         }
         $media = ScreenGroup::fetchScreenGroupSequenceMediaWithTheirDuration($screenGroup->sequence_id);
         $screenGroup->save();
@@ -76,12 +77,12 @@ class ScreenGroupController extends Controller
             'not_joined_screens' => $notJoinedScreens,
         ]);
     }
-
+    
     public static function getScreensNotInTheGroup($media_owner_id)
     {
         return ScreenGroup::getScreensNotInTheGroup($media_owner_id);
     }
-
+    
     public function update(UpdateScreenGroupRequest $request, $id)
     {
         $screenGroup = ScreenGroup::find($id);
@@ -90,25 +91,52 @@ class ScreenGroupController extends Controller
             'sequence_id' => $request['modal-sequence-id'] == 'select' ? null : $request['modal-sequence-id'],
             'is_active' => $request['is_active'] == 'on',
         ]);
-        $screensIds = $request['screens'];
+        $screensIds = $request['screens']? $request['screens'] : [];
         $syncedScreens = $screenGroup->screens()->sync($screensIds);
         $attachedScreens = $syncedScreens['attached'];
         $detachedScreens = $syncedScreens['detached'];
         if ($detachedScreens) {
             foreach ($detachedScreens as $detachedScreen) {
                 $screen = Screen::find($detachedScreen);
-                $screen->sequence_id = 1;
+                $screen->sequence_id = Sequence::where('name', '=', 'Default Sequence')->first()->id;
                 $screen->active_screen_group_id = null;
                 $screen->save();
-                event(new BroadcastScreenMedia($detachedScreen, Sequence::fetchDefaultSequence()));
+                event(new BroadcastScreenMedia($screen->id, Sequence::fetchDefaultSequence()));
             }
         }
+
+        
+        // check if the screen is already in a group in the screen_screen_group table
+        
+
+        
+        // if the screen is not in the request, then detach it from the screen_group
+        $screens = Screen::all();
+        foreach($screens as $screen) {
+            if(!in_array($screen->id, $screensIds)) {
+                $screenGroup->screens()->detach($screen->id);
+            }
+        }
+        
+
+
         if ($attachedScreens) {
             foreach ($attachedScreens as $attachedScreen) {
                 $screen = Screen::find($attachedScreen);
                 $screen->sequence_id = $screenGroup->sequence_id;
                 $screen->active_screen_group_id = $screenGroup->id;
                 $screen->save();
+                // if the screen is in other group, then detach it from the other group
+                $v = DB::table('screen_screen_group')->where('screen_id','=', $screen->id)->where('screen_group_id', '!=', $screenGroup->id)->get();
+                // dd($v->count() > 0); 
+                if($v->count() > 0) {
+                    DB::table('screen_screen_group')
+                    ->where('screen_id', $screen->id)
+                    ->where('screen_group_id', '!=', $screenGroup->id)
+                    ->delete();
+                }
+                
+                
                 event(new BroadcastScreenMedia($attachedScreen, ScreenGroup::fetchScreenGroupSequenceMediaWithTheirDuration($screenGroup->sequence_id)));
             }
         }

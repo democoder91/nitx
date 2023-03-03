@@ -453,6 +453,7 @@
 </script>
 <!--Dropzone Script-->
 <script>
+    Dropzone.autoDiscover = false;
     var dropzone = new Dropzone(".dropzone", {
         maxFilesize: 100,
         //createImageThumbnails: true,

@@ -1,26 +1,26 @@
 <x-media_owner.layout :name="$name">
     @section('components.media_owner.sidebar')
-        @section('active4', __('btn btn-primary-4'))
-        @section('active-txt-4', __('hp-text-color-primary-1'))
+    @section('active4', __('btn btn-primary-4'))
+    @section('active-txt-4', __('hp-text-color-primary-1'))
     @endsection
 
 
     <div class="col-12">
 
         @if(session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
         @endif
 
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <div class="card pb-0 pb-sm-64">
@@ -33,17 +33,14 @@
                                 <h1 class="mb-8">Main</h1>
                             </div>
                             <div class="col hp-flex-none w-auto dropdown">
-                                <a class="btn btn-primary dropdown-toggle" href="" role="button" id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn btn-primary dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="iconly-Light-Plus" style="margin-right: 0.5em; font-size:1em"></i>
                                     Add
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#uploadmodal" data-bs-toggle="modal"
-                                           data-bs-target="#uploadmodal">New Media</a></li>
-                                    <li><a class="dropdown-item" href="#newFolderModal" data-bs-toggle="modal"
-                                           data-bs-target="#newFolderModal">New Folder</a></li>
+                                    <li><a class="dropdown-item" href="#uploadmodal" data-bs-toggle="modal" data-bs-target="#uploadmodal">New Media</a></li>
+                                    <li><a class="dropdown-item" href="#newFolderModal" data-bs-toggle="modal" data-bs-target="#newFolderModal">New Folder</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -52,70 +49,57 @@
                                 <li class="breadcrumb-item"><a href="#">main</a></li>
                             </ol>
                         </nav>
-                        <div class="mt-24 mb-12"></div><!--Dividers-->
+                        <div class="mt-24 mb-12"></div>
+                        <!--Dividers-->
                         @if(count($folders) == 0 && count($media) == 0)
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="row d-flex justify-content-center"
-                                         style="margin-top: 4em; margin-bottom:4em;">
-                                        <img src="{{ asset('assets/img/illustrations/empty-search.svg') }}"
-                                             style="height:8em">
-                                        <h5 style="text-align: center; margin-top: 2em;">There are no media in this folder!</h5>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="row d-flex justify-content-center" style="margin-top: 4em; margin-bottom:4em;">
+                                    <img src="{{ asset('assets/img/illustrations/empty-search.svg') }}" style="height:8em">
+                                    <h5 style="text-align: center; margin-top: 2em;">There are no media in this folder!</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End of Empty Media Folder-->
+                        @else
+                        <div class="row spotlight-group">
+                            @foreach($folders as $folder)
+                            <!-- Folder -->
+                            <div class="col-6 col-md-2" style="margin-top:1em">
+                                <div class="" style="padding: 0.2em">
+                                    <a href="{{route('media_owner.get_folder', $folder->id)}}" class="d-flex align-items-center justify-content-between flex-column">
+                                        <i class="ri-folder-fill hp-text-color-primary-2 folders" style=" font-size: 10em; width:100%" id="{{$folder->id}}"></i></a>
+
+                                    <div class="row" style="margin: 0.8em">
+                                        <h6 class="col-8 d-inline-block text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$folder->name}}">{{$folder->name}}</h6>
+                                        <a class="col-2 ri-more-2-fill d-block d-sm-block d-md-block d-lg-none" style="font-size: 1.5em; " data-bs-toggle="offcanvas" data-bs-target="#offcanvasFolder" aria-controls="offcanvasFolder" role="button"></a>
                                     </div>
                                 </div>
-                            </div><!--End of Empty Media Folder-->
-                        @else
-                            <div class="row spotlight-group">
-                                @foreach($folders as $folder)
-                                    <!-- Folder -->
-                                    <div class="col-6 col-md-2" style="margin-top:1em">
-                                        <div class="" style="padding: 0.2em">
-                                            <a href="{{route('media_owner.get_folder', $folder->id)}}" class="d-flex align-items-center justify-content-between flex-column">
-                                                <i class="ri-folder-fill hp-text-color-primary-2 folders" style=" font-size: 10em; width:100%" id="{{$folder->id}}"></i></a>
-    
-                                                <div class="row" style="margin: 0.8em">
-                                                    <h6 class="col-8 d-inline-block text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                    title="{{$folder->name}}">{{$folder->name}}</h6>
-                                                <a class="col-2 ri-more-2-fill d-block d-sm-block d-md-block d-lg-none" style="font-size: 1.5em; "
-                                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasFolder" aria-controls="offcanvasFolder"role="button"></a>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <!-- End of Folder -->
-                                @endforeach
-                                @foreach($media as $item)
-                                    <div class="col-6 col-md-2 media" style="margin-top:1em" id="{{$item->id}}">
-                                        <div class="card card-body" style="padding: 0.2em">
-                                            @if($item->type =='image')
-                                                <a class="spotlight" theme
-                                                   href="{{$item->compressed_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}">
-                                                    <img src="{{$item->thumbnail_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
-                                                         alt="{{$item->name}}" style="  width:100%; height:8em; object-fit:cover;">
-                                                </a>
-                                            @elseif($item->type =='video')
-                                                <a class="spotlight" data-media="video"
-                                                   data-src-webm="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
-                                                   data-src-ogg="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
-                                                   data-src-mp4="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}"
-                                                   data-autoplay="false" data-poster="">
-                                                    <i class="iconly-Light-Play hp-text-color-primary-4"
-                                                       style="font-size: 3em; position:absolute; top:25%; left:40%"></i>
-                                                    <img src="{{$item->thumbnail_media_path ??  asset('/img/ad/nothumbnail.png')}}"
-                                                         style="  width:100%; height:8em; object-fit:cover;">
-                                                </a>
-                                            @endif
-                                            <div class="row" style="margin: 0.8em">
-                                                <h6 class="col-8 d-inline-block text-truncate"
-                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                title="{{$item->name}}">{{$item->name}}
-                                            </h6>
-                                            <a class="col-2 ri-more-2-fill d-block d-sm-block d-md-block d-lg-none" style="font-size: 1.5em; "
-                                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasMedia" aria-controls="offcanvasMedia"role="button"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
                             </div>
+                            <!-- End of Folder -->
+                            @endforeach
+                            @foreach($media as $item)
+                            <div class="col-6 col-md-2 media" style="margin-top:1em" id="{{$item->id}}">
+                                <div class="card card-body" style="padding: 0.2em">
+                                    @if($item->type =='image')
+                                    <a class="spotlight" theme href="{{$item->compressed_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}">
+                                        <img src="{{$item->thumbnail_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" alt="{{$item->name}}" style="  width:100%; height:8em; object-fit:cover;">
+                                    </a>
+                                    @elseif($item->type =='video')
+                                    <a class="spotlight" data-media="video" data-src-webm="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-ogg="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-mp4="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-autoplay="false" data-poster="">
+                                        <i class="iconly-Light-Play hp-text-color-primary-4" style="font-size: 3em; position:absolute; top:25%; left:40%"></i>
+                                        <img src="{{$item->thumbnail_media_path ??  asset('/img/ad/nothumbnail.png')}}" style="  width:100%; height:8em; object-fit:cover;">
+                                    </a>
+                                    @endif
+                                    <div class="row" style="margin: 0.8em">
+                                        <h6 class="col-8 d-inline-block text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$item->name}}">{{$item->name}}
+                                        </h6>
+                                        <a class="col-2 ri-more-2-fill d-block d-sm-block d-md-block d-lg-none" style="font-size: 1.5em; " data-bs-toggle="offcanvas" data-bs-target="#offcanvasMedia" aria-controls="offcanvasMedia" role="button"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -124,8 +108,7 @@
     </div>
 
     <!--New Folder Modal-->
-    <div class="modal fade" id="newFolderModal" tabindex="-1" aria-labelledby="newFolderModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="newFolderModal" tabindex="-1" aria-labelledby="newFolderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -147,10 +130,10 @@
                 </form>
             </div>
         </div>
-    </div><!--End of New Folder Modal-->
+    </div>
+    <!--End of New Folder Modal-->
     <!--Upload Modal-->
-    <div class="modal fade" id="uploadmodal" tabindex="-1" aria-labelledby="uploadmodalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="uploadmodal" tabindex="-1" aria-labelledby="uploadmodalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg modal-dialog-centered ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -161,10 +144,8 @@
 
                     <div class="row g-16">
                         <div class="col-6 hp-flex-none w-auto">
-                            <div
-                                    class="avatar-item d-flex align-items-center justify-content-center avatar-lg bg-primary-4 hp-bg-color-dark-primary rounded-circle">
-                                <i class="ri-file-upload-fill text-primary hp-text-color-dark-primary-2"
-                                   style="font-size: 24px;"></i>
+                            <div class="avatar-item d-flex align-items-center justify-content-center avatar-lg bg-primary-4 hp-bg-color-dark-primary rounded-circle">
+                                <i class="ri-file-upload-fill text-primary hp-text-color-dark-primary-2" style="font-size: 24px;"></i>
                             </div>
                         </div>
                         <div class="col">
@@ -173,32 +154,111 @@
                         </div>
                     </div>
 
-                    <div class="mt-24 mb-12"></div><!--Dividers-->
+                    <div class="mt-24 mb-12"></div>
+                    <!--Dividers-->
 
-                    <form action="{{route('media_owner.upload_media')}}" method="POST"
-                          enctype="multipart/form-data"
-                          class="dropzone dz-clickable border-primary-1  bg-primary-4" id="image-upload">
+                    <form action="{{route('media_owner.upload_media')}}" 
+                    method="POST" 
+                    enctype="multipart/form-data"
+                    data-parsley-validate="true"
+                    >
                         @csrf
-                        <div class="dz-default">
-                            <div class=" dz-message">
-                                <h3><strong>Nitx is Snapy 🔥</br> You can Drop & Drag 😎</strong></h3>
-                            </div>
+                        <div class="mb-3">
+                            <label for="media_name" class="col-form-label">Media Name</label>
+                            <input type="text" name="media_name" class="form-control" id="media_name" required>
+                        </div>
+                        {{-- file input  --}}
+                        <div class="mb-3">
+                            <label for="media_file" class="col-form-label">Media File</label>
+                            <input type="file" name="media_file" class="form-control" id="media_file" required>
+                            {{-- script to validate file extention is an image or an mp4 video --}}
+                            <script>
+                                document.getElementById('media_file').addEventListener('change', function () {
+                                    var file = this.files[0];
+                                    var fileType = file.type;
+                                    var validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+                                    var validVideoTypes = ['video/mp4'];
+                                    if (validImageTypes.includes(fileType)) {
+                                        // show the image thumbnail in the preview image tag and hide the video tag
+                                        document.getElementById('image_thumbnail').style.display = 'block';
+                                        document.getElementById('video_thumbnail').style.display = 'none';
+                                        document.getElementById('image_thumbnail').src = URL.createObjectURL(file);
+                                        document.getElementById('image_thumbnail').hidden = false;
+                                        document.getElementById('video_thumbnail').hidden = true;         
+                                        // stop the playing video if any
+                                        document.getElementById('video_thumbnail').pause();
+
+                                        
+                                    } else if (validVideoTypes.includes(fileType)) {
+                                    // show the video  in the preview video tag and hide the image tag                                        
+                                        document.getElementById('video_thumbnail').style.display = 'block';
+                                        document.getElementById('image_thumbnail').style.display = 'none';
+                                        document.getElementById('video_thumbnail').src = URL.createObjectURL(file);
+                                        document.getElementById('video_thumbnail').hidden = false;
+                                        document.getElementById('image_thumbnail').hidden = true;
+
+                                    } else {
+                                        alert('Please upload a valid image or video file');
+                                        this.value = '';
+                                        // hide the preview image and video tags
+                                        document.getElementById('image_thumbnail').style.display = 'none';
+                                        document.getElementById('video_thumbnail').style.display = 'none';
+                                        document.getElementById('image_thumbnail').hidden = true;
+                                        document.getElementById('video_thumbnail').hidden = true;
+                                        document.getElementById('video_thumbnail').pause();
+
+
+                                        
+                                    }
+                                });
+                                // chek the file size before uploading
+                                document.getElementById('media_file').addEventListener('change', function () {
+                                    var file = this.files[0];
+                                    var fileSize = file.size;
+                                    if (fileSize > 104857600) {
+                                        alert('File size is too large, please upload a file less than 100MB');
+                                        this.value = '';
+                                        // hide the preview image and video tags
+                                        document.getElementById('image_thumbnail').style.display = 'none';
+                                        document.getElementById('video_thumbnail').style.display = 'none';
+                                        document.getElementById('image_thumbnail').hidden = true;
+                                        document.getElementById('video_thumbnail').hidden = true;
+                                        document.getElementById('video_thumbnail').pause();
+
+                                    }
+                                });
+                                </script>
+                                <div class="mb-3 pt-32" id="preview">
+                                    <div class="d-flex justify-content-center">
+                                        <img id="image_thumbnail" src="" alt="" style="display: none; width: 350px; height: 200px; object-fit: cover;" hidden>
+                                        {{-- video preview like the image  --}}
+                                        <video id="video_thumbnail" src="" style="display: none; width: 350px; height: 200px; object-fit: cover;" controls hidden></video>
+                                    </div>
+
+                                </div>
+
+                            
+                            
+                            
+                            
+                        </div>
+                        {{-- create a div with the thumpnail image in the center  --}}
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-text" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="uploadFilesButton" 
+                            {{-- onclick="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'uploadFilesButton')"  --}}
+                            class="btn btn-primary">Upload File
+                            </button>
                         </div>
                     </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-text" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="uploadFilesButton"
-                                onclick="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'uploadFilesButton')"
-                                class="btn btn-primary">Upload File
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>    <!--End of Upload Modal-->
+    </div>
+    <!--End of Upload Modal-->
 
-    <div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModal"
-         aria-hidden="true">
+    <div class="modal fade" id="deleteMediaModal" tabindex="-1" aria-labelledby="deleteMediaModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -224,8 +284,7 @@
     </div>
 
 
-    <div class="modal fade" id="renameMediaModal" tabindex="-1" aria-labelledby="renameMediaModal"
-         aria-hidden="true">
+    <div class="modal fade" id="renameMediaModal" tabindex="-1" aria-labelledby="renameMediaModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,8 +309,7 @@
     </div>
 
 
-    <div class="modal fade" id="renameFolderModal" tabindex="-1" aria-labelledby="renameFolderModal"
-         aria-hidden="true">
+    <div class="modal fade" id="renameFolderModal" tabindex="-1" aria-labelledby="renameFolderModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -275,8 +333,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="moveMediaModal" tabindex="-1" aria-labelledby="moveMediaModal"
-         aria-hidden="true">
+    <div class="modal fade" id="moveMediaModal" tabindex="-1" aria-labelledby="moveMediaModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -290,7 +347,7 @@
                             <option value="select">Select Folder</option>
                             <option value="null">main</option>
                             @foreach ($all_folders as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                         <div class="modal-footer">
@@ -303,8 +360,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="moveFolderModal" tabindex="-1" aria-labelledby="moveFolderModal"
-         aria-hidden="true">
+    <div class="modal fade" id="moveFolderModal" tabindex="-1" aria-labelledby="moveFolderModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -318,7 +374,7 @@
                             <option value="select">Select Folder</option>
                             <option value="null">main</option>
                             @foreach ($all_folders as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                         <div class="modal-footer">
@@ -331,8 +387,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="renameFolderModal" tabindex="-1" aria-labelledby="renameFolderModal"
-         aria-hidden="true">
+    <div class="modal fade" id="renameFolderModal" tabindex="-1" aria-labelledby="renameFolderModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -356,8 +411,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="moveMediaModal" tabindex="-1" aria-labelledby="moveMediaModal"
-         aria-hidden="true">
+    <div class="modal fade" id="moveMediaModal" tabindex="-1" aria-labelledby="moveMediaModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -371,7 +425,7 @@
                             <option value="select">Select Folder</option>
                             <option value="null">main</option>
                             @foreach($all_folders as $folder)
-                                <option value="{{$folder->id}}">{{$folder->name}}</option>
+                            <option value="{{$folder->id}}">{{$folder->name}}</option>
                             @endforeach
                         </select>
                         <div class="modal-footer">
@@ -384,8 +438,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteFolderModal" tabindex="-1" aria-labelledby="deleteFolderModal"
-         aria-hidden="true">
+    <div class="modal fade" id="deleteFolderModal" tabindex="-1" aria-labelledby="deleteFolderModal" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -413,43 +466,39 @@
     <!--Right Menu Media -->
     <ul id="rightmenuMedia" class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="display: none">
         <li>
-            <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal"
-               data-bs-target="#renameMediaModal">
+            <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal" data-bs-target="#renameMediaModal">
                 <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
                 Rename</a>
             </a>
         </li>
         <li>
-            <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal"
-               data-bs-target="#moveMediaModal">
+            <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal" data-bs-target="#moveMediaModal">
                 <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
                 Move</a>
             </a>
         </li>
         <li><a class="dropdown-item" href="" id="downloadMedia">
-            <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
-            Download</a>
+                <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
+                Download</a>
         </li>
         <li>
-            <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal"
-               data-bs-target="#deleteMediaModal">
+            <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal" data-bs-target="#deleteMediaModal">
                 <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
                 Delete</a>
             </a>
         </li>
-    </ul><!--End of Right Menu Media -->
+    </ul>
+    <!--End of Right Menu Media -->
     <!--Right Menu Folder -->
     <ul id="rightmenuFolder" class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="display: none">
         <li>
-            <a class="dropdown-item" id="#renameFolderModal" data-bs-toggle="modal"
-               data-bs-target="#renameFolderModal">
+            <a class="dropdown-item" id="#renameFolderModal" data-bs-toggle="modal" data-bs-target="#renameFolderModal">
                 <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
                 Rename</a>
             </a>
         </li>
         <li>
-            <a class="dropdown-item" id="#moveFolderModal" data-bs-toggle="modal"
-               data-bs-target="#moveFolderModal">
+            <a class="dropdown-item" id="#moveFolderModal" data-bs-toggle="modal" data-bs-target="#moveFolderModal">
                 <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
                 Move</a>
             </a>
@@ -459,89 +508,85 @@
                 Download</a>
         </li>
         <li>
-            <a class="dropdown-item" id="#deleteFolderModal" data-bs-toggle="modal"
-               data-bs-target="#deleteFolderModal">
+            <a class="dropdown-item" id="#deleteFolderModal" data-bs-toggle="modal" data-bs-target="#deleteFolderModal">
                 <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
                 Delete</a>
             </a>
         </li>
-    </ul><!--End of Right Menu Folder -->
+    </ul>
+    <!--End of Right Menu Folder -->
 
-   <!--Mobile Drawer Menu for Media-->
-   <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasMedia" aria-labelledby="offcanvasMediaLabel" style="height: 60%">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasMediaLabel">Media</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+    <!--Mobile Drawer Menu for Media-->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasMedia" aria-labelledby="offcanvasMediaLabel" style="height: 60%">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasMediaLabel">Media</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
 
-    <div class="offcanvas-body small">
-        <ul id="rightmenuMedia" aria-labelledby="dropdownMenuLink" style="display: block">
-            <li>
-                <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#renameMediaModal">
-                    <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
-                    Rename</a>
-                </a>
-            </li>
-            <li><a class="dropdown-item" href="" id="downloadMedia">
-                    <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
-                    Download</a>
-            </li>
-            <li>
-                <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#moveMediaModal">
-                    <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
-                    Move</a>
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#deleteMediaModal">
-                    <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
-                    Delete</a>
-                </a>
-            </li>
-        </ul>
+        <div class="offcanvas-body small">
+            <ul id="rightmenuMedia" aria-labelledby="dropdownMenuLink" style="display: block">
+                <li>
+                    <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal" data-bs-target="#renameMediaModal">
+                        <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
+                        Rename</a>
+                    </a>
+                </li>
+                <li><a class="dropdown-item" href="" id="downloadMedia">
+                        <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
+                        Download</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal" data-bs-target="#moveMediaModal">
+                        <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
+                        Move</a>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal" data-bs-target="#deleteMediaModal">
+                        <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
+                        Delete</a>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div><!--End of Mobile Drawer Menu for Media-->
+    <!--End of Mobile Drawer Menu for Media-->
 
-   <!--Mobile Drawer Menu for Folder-->
-   <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasFolder" aria-labelledby="offcanvasFolderLabel" style="height: 60%">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasFolderLabel">Folder</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+    <!--Mobile Drawer Menu for Folder-->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasFolder" aria-labelledby="offcanvasFolderLabel" style="height: 60%">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasFolderLabel">Folder</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
 
-    <div class="offcanvas-body small">
-        <ul id="rightmenuMedia" aria-labelledby="dropdownMenuLink" style="display: block">
-            <li>
-                <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#renameMediaModal">
-                    <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
-                    Rename</a>
-                </a>
-            </li>
-            <li><a class="dropdown-item" href="" id="downloadMedia">
-                    <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
-                    Download</a>
-            </li>
-            <li>
-                <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#moveMediaModal">
-                    <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
-                    Move</a>
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal"
-                   data-bs-target="#deleteMediaModal">
-                    <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
-                    Delete</a>
-                </a>
-            </li>
-        </ul>
+        <div class="offcanvas-body small">
+            <ul id="rightmenuMedia" aria-labelledby="dropdownMenuLink" style="display: block">
+                <li>
+                    <a class="dropdown-item" id="#renameMediaModal" data-bs-toggle="modal" data-bs-target="#renameMediaModal">
+                        <i class="iconly-Curved-Edit me-8" style="font-size: 16px;"></i>
+                        Rename</a>
+                    </a>
+                </li>
+                <li><a class="dropdown-item" href="" id="downloadMedia">
+                        <i class="iconly-Light-Download me-8" style="font-size: 16px;"></i>
+                        Download</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="#moveMediaModal" data-bs-toggle="modal" data-bs-target="#moveMediaModal">
+                        <i class="iconly-Curved-ArrowLeftSquare me-8" style="font-size: 16px;"></i>
+                        Move</a>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" id="#deleteMediaModal" data-bs-toggle="modal" data-bs-target="#deleteMediaModal">
+                        <i class="iconly-Curved-Delete me-8" style="font-size: 16px;"></i>
+                        Delete</a>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div><!--End of Mobile Drawer Menu  for Folder -->
+    <!--End of Mobile Drawer Menu  for Folder -->
 
 
     <script>
@@ -611,5 +656,7 @@
                 menu.style.top = e.pageY - 110 + "px";
             }
         }
+
     </script>
 </x-media_owner.layout>
+

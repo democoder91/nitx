@@ -34,30 +34,31 @@ class UploadController extends Controller
 
     public function uploadMedia(Request $request, $parentFolderId = null)
     {
-        $file = $request->file('file');
-        $fileName = str_replace(' ', '-', $file->getClientOriginalName());
-        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
-        if ($receiver->isUploaded() === false) {
-            throw new UploadMissingFileException();
-        }
-        $save = $receiver->receive();
-        if ($save->isFinished()) {
-            return $this->saveFile($save->getFile(), $fileName, $parentFolderId);
-        }
-        $handler = $save->handler();
-        return response()->json([
-            "done" => $handler->getPercentageDone(),
-            'status' => true
+        // validate that the request file is an image or video
+        $this->validate($request, [
+            'media_file' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,',
+            // media_name should be required
+            'media_name' => 'required'
         ]);
+        // define file variable as the request file
+        $file = $request->file('media_file');
+        // die and dump the request file to see what is coming
+        $isImage = $this->isImage($file);
+
+        // die and dump is image 
+        dd(($isImage));
+        
     }
 
-    public static function isImageOrVideo($mime)
+    public static function isImage($file)
     {
-        if ($mime == 'jpeg' || $mime == 'png' || $mime == 'jpg' || $mime == 'gif' || $mime == 'svg') {
-            return 'image';
-        } else if ($mime == 'mp4') {
-            return 'video';
+        // check if the file is an image by checking the mime type
+        if (strpos($file->getMimeType(), 'image') === 0) {
+            return true;
+        }else{
+            return false;
         }
+        
     }
 
     /**

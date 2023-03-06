@@ -32,208 +32,49 @@ class UploadController extends Controller
      * @throws UploadFailedException
      */
 
-    public function uploadMedia(Request $request, $parentFolderId = null)
+    // a method to uplad file chunks and append them to a file called uploadMedia
+    public function uploadMedia(Request $request)
     {
-        // validate that the request file is an image or video
-        $this->validate($request, [
-            'media_file' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,',
-            // media_name should be required
-            'media_name' => 'required'
-        ]);
-        // define file variable as the request file
-        $file = $request->file('media_file');
-        // die and dump the request file to see what is coming
-        $isImage = $this->isImage($file);
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
-        // die and dump is image 
-        dd(($isImage));
-        
-    }
-
-    public static function isImage($file)
-    {
-        // check if the file is an image by checking the mime type
-        if (strpos($file->getMimeType(), 'image') === 0) {
-            return true;
-        }else{
-            return false;
+        if (!$receiver->isUploaded()) {
+            throw new UploadMissingFileException();
         }
-        
-    }
 
-    /**
-     * Saves the file to S3 server
-     *
-     * @param UploadedFile $file
-     *
-     * @return JsonResponse
-     */
-    protected function saveFileToS3($file)
-    {
-        $fileName = $this->createFilename($file);
-        $disk = Storage::disk('s3');
-        $disk->putFileAs('photos', $file, $fileName);
-        $mime = str_replace('/', '-', $file->getMimeType());
-        unlink($file->getPathname());
-        return response()->json([
-            'path' => $disk->url($fileName),
-            'name' => $fileName,
-            'mime_type' => $mime
-        ]);
-    }
+        // save the file with chunks
+        $save = $receiver->receive();
 
-    /**
-     * Saves the file
-     *
-     * @param UploadedFile $file
-     *
-     * @return JsonResponse
-     */
+        if ($save->isFinished()) {
+            // get the file
+            $file = $save->getFile();
+            // save the file to s3
+            // the file path variable is the user id then the date then the file name
+            $filePath = $request->user()->id . '/' . date('Y-m-d') . '/' . $file->getClientOriginalName();
+            $path = Storage::disk('public')->putFileAs($filePath, $file, $file->getClientOriginalName());
 
-    protected function saveFile(UploadedFile $file, $fileName, $parentFolderId)
-    {
-        $fileType = $this->isImageOrVideo($file->extension());
-        $fileSize = $file->getSize();
-        $mime = str_replace('/', '-', $file->getMimeType());
-        $date = date("Y-m-d");
-        $imageThumbnailPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/images-thumbnails/{$mime}/{$date}";
-        $imageCompressedPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/compressed-images/{$mime}/{$date}";
-        //
-        $videoPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos/{$date}";
-        $videoThumbnailPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos-thumbnails/{$date}";
-        $videoImageCompressedPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos-compressed-images/{$date}";
-        $disk = Storage::disk('s3');
-        if ($fileType == 'image') {
-            $imageSystemName = $this->createFilename($file);
-            $width = Image::make($file)->width();
-            $height = Image::make($file)->height();
-            if ($mime == "image-gif") {
-                dd(333);
-                $disk->put($imageCompressedPath . '/' . $imageSystemName, $file);
-                $disk->put($imageThumbnailPath . '/' . $imageSystemName, $file);
-                $compressedMediaURL = Storage::disk('s3')->url($imageCompressedPath . '/' . $imageSystemName);
-                $thumbnailMediaURL = Storage::disk('s3')->url($imageThumbnailPath . '/' . $imageSystemName);
-                Storage::disk('s3')->setVisibility($compressedMediaURL, 'public');
-                Storage::disk('s3')->setVisibility($thumbnailMediaURL, 'public');
-                $this->saveFileRecord($imageSystemName, $mime, $fileSize, self::getFileType($mime), $height, $width, $fileName,
-                    $parentFolderId, $compressedMediaURL, $thumbnailMediaURL, null);
-            } else {
-                $compressedImage = Image::make($file)->encode('jpg', 50);
-                $thumbnailImage = Image::make($file)->resize(248, 128)->encode('jpg', 80);
-                $disk->put($imageCompressedPath . '/' . $imageSystemName, $compressedImage);
-                $disk->put($imageThumbnailPath . '/' . $imageSystemName, $thumbnailImage);
-                $compressedMediaURL = Storage::disk('s3')->url($imageCompressedPath . '/' . $imageSystemName);
-                $thumbnailMediaURL = Storage::disk('s3')->url($imageThumbnailPath . '/' . $imageSystemName);
-                Storage::disk('s3')->setVisibility($compressedMediaURL, 'public');
-                Storage::disk('s3')->setVisibility($thumbnailMediaURL, 'public');
-                $this->saveFileRecord($imageSystemName, $mime, $fileSize, self::getFileType($mime), $height, $width, $fileName,
-                    $parentFolderId, $compressedMediaURL, $thumbnailMediaURL, null);
-            }
-        } else {
-            $videoSystemName = $this->createFilename($file);
-            $videoThumbnailSystemName = $this->createFilename($file, 'png');
-            $videoImageCompressedSystemName = $this->createFilename($file, 'png');
-            try {
-                $lowBitrateFormat = (new X264)->setKiloBitrate(150);
-                $videoPath .= '/' . $videoSystemName;
-                $videoThumbnailPath .= '/' . $videoThumbnailSystemName;
-                $videoImageCompressedPath .= '/' . $videoImageCompressedSystemName;
-                $video = FFMpeg::open($file)
-                    ->addFilter(function (VideoFilters $filters) {
-                        $filters->resize(new Dimension(1280, 720));
-                    })
-//                    ->addWatermark(function (WatermarkFactory $watermark) {
-//                        $watermark->fromDisk('local')
-//                            ->open('logo_color.svg')
-//                            ->left(25)
-//                            ->top(25);
-//                    })
-                    ->export()
-                    ->toDisk('s3')
-                    ->inFormat($lowBitrateFormat)
-                    ->save($videoPath);
-                $videoURL = Storage::disk('s3')->url($videoPath);
+            
 
-                $videoThumbnail = FFMpeg::open($file)
-                    ->getFrameFromSeconds(1)
-                    ->resize(248, 128)
-                    ->export()
-                    ->toDisk('s3')
-                    ->save($videoThumbnailPath);
 
-                $videoImageCompressed = FFMpeg::open($file)
-                    ->getFrameFromSeconds(1)
-                    ->export()
-                    ->toDisk('s3')
-                    ->save($videoImageCompressedPath);
 
-                $videoThumbnailURL = Storage::disk('s3')->url($videoThumbnailPath);
-                $videoImageCompressedURL = Storage::disk('s3')->url($videoImageCompressedPath);
 
-                Storage::disk('s3')->setVisibility($videoURL, 'public');
-                Storage::disk('s3')->setVisibility($videoThumbnailURL, 'public');
-                Storage::disk('s3')->setVisibility($videoImageCompressedURL, 'public');
-
-                $this->saveFileRecord($videoSystemName, $mime, $fileSize, self::getFileType($mime), null, null, $fileName,
-                    $parentFolderId, $videoImageCompressedURL, $videoThumbnailURL, $videoURL);
-
-            } catch (Exception $exception) {
-                dd($exception->getMessage());
-            }
+            
 
         }
-        unlink($file->getPathname());
-        return response()->json([
-            'success' => true,
-        ]);
+
+        //get the percentage of the upload
+        $percentage = $save->handler()->getPercentageDone();
+
+        return response()->json(['done' => $percentage]);
     }
+}
 
-
-    public static function getFileType($fileType)
-    {
-        return explode('-', $fileType)[0];
+// a function to check if the file is a video or an image
+function isVideo($file)
+{
+    $videoExtensions = ['mp4'];
+    $extension = $file->getClientOriginalExtension();
+    if (in_array($extension, $videoExtensions)) {
+        return true;
     }
-
-    public static function createUserFolder()
-    {
-
-    }
-
-    public function saveFileRecord($systemFileName, $mime, $fileSize, $fileType, $height, $width, $fileName, $parentFolderId,
-                                   $compressedMediaURL, $thumbnailMediaURL, $videoURL)
-    {
-        $media = Media::create([
-            'name' => $fileName,
-            'system_media_name' => $systemFileName,
-            'media_aws_s3_url' => $compressedMediaURL,
-            'path' => null,
-            'compressed_media_path' => $compressedMediaURL,
-            'thumbnail_media_path' => $thumbnailMediaURL,
-            'size' => $fileSize,
-            'type' => $fileType,
-            'parent_folder_id' => $parentFolderId,
-            'height' => $height,
-            'width' => $width,
-            'media_owner_id' => auth()->user()->id,
-            'mime' => $mime,
-            'video_path' => $videoURL
-        ]);
-        $media->save();
-    }
-
-
-    /**
-     * Create unique filename for uploaded file
-     * @param UploadedFile $file
-     * @return string
-     */
-
-
-    protected function createFilename(UploadedFile $file, $fileExtension = null)
-    {
-        $fileExtension = $fileExtension ?? $file->getClientOriginalExtension();
-        return md5(time() . $file->getClientOriginalName()) . "." . $fileExtension;
-    }
-
-
+    return false;
 }

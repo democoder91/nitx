@@ -456,6 +456,7 @@
     Dropzone.autoDiscover = false;
     var dropzone = new Dropzone(".dropzone", {
         maxFilesize: 100,
+        
         //createImageThumbnails: true,
 
         acceptedFiles: ".jpeg,.jpg,.png,.gif,.mp4",

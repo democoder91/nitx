@@ -156,22 +156,33 @@
 
                     <div class="mt-24 mb-12"></div>
                     <!--Dividers-->
+                    <div class="mb-3 pt-32" id="preview">
+                        <div class="d-flex justify-content-center">
+                            <img id="image_thumbnail" src="" alt="" style="display: none; width: 350px; height: 200px; object-fit: cover;" hidden>
+                            {{-- video preview like the image  --}}
+                            <video id="video_thumbnail" src="" style="display: none; width: 350px; height: 200px; object-fit: cover;" controls hidden></video>
+                        </div>
+                    </div>
 
                     <form action="{{route('media_owner.upload_media')}}" 
-                    method="POST" 
-                    enctype="multipart/form-data"
-                    data-parsley-validate="true"
+                    method="POST" enctype="multipart/form-data" d
+                    ata-parsley-validate="true"
+                    class="dropzone"
                     >
                         @csrf
-                        <div class="mb-3">
-                            <label for="media_name" class="col-form-label">Media Name</label>
-                            <input type="text" name="media_name" class="form-control" id="media_name" required>
+                        {{-- dropzone for files  --}}
+                        <div class="fallback">
+                            <input name="file" type="file" id="media_file" required>
                         </div>
-                        {{-- file input  --}}
-                        <div class="mb-3">
-                            <label for="media_file" class="col-form-label">Media File</label>
-                            <input type="file" name="media_file" class="form-control" id="media_file" required>
-                            {{-- script to validate file extention is an image or an mp4 video --}}
+
+                        
+                    </form>
+                    <script>
+                    Dropzone.options.recommendationDiv = {
+                        acceptedFiles: 'image/*'
+                    };
+                    </script>
+                    {{-- script to chunk upload the file on form submit --}}
                             <script>
                                 document.getElementById('media_file').addEventListener('change', function () {
                                     var file = this.files[0];
@@ -228,30 +239,6 @@
                                     }
                                 });
                                 </script>
-                                <div class="mb-3 pt-32" id="preview">
-                                    <div class="d-flex justify-content-center">
-                                        <img id="image_thumbnail" src="" alt="" style="display: none; width: 350px; height: 200px; object-fit: cover;" hidden>
-                                        {{-- video preview like the image  --}}
-                                        <video id="video_thumbnail" src="" style="display: none; width: 350px; height: 200px; object-fit: cover;" controls hidden></video>
-                                    </div>
-
-                                </div>
-
-                            
-                            
-                            
-                            
-                        </div>
-                        {{-- create a div with the thumpnail image in the center  --}}
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-text" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="uploadFilesButton" 
-                            {{-- onclick="setTimeDurationAfterSubmittingFormToDisableButton(30000, 'uploadFilesButton')"  --}}
-                            class="btn btn-primary">Upload File
-                            </button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

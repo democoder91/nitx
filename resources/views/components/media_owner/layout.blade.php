@@ -29,7 +29,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/page-profile.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/widgets-selectbox.css')}}">
     <!-- Dropzone -->
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
     <!-- spotlight -->
     <link rel="stylesheet" href="https://rawcdn.githack.com/nextapps-de/spotlight/0.7.8/dist/css/spotlight.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
@@ -39,6 +38,8 @@
     <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css" rel="stylesheet"
           crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('assets/css/nitx.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
     <link
     href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&family=Tajawal:wght@200;400;700;800&display=swap"
     rel="stylesheet">
@@ -217,7 +218,6 @@
 <script src="{{asset('assets/js/customizer.js')}}"></script>
 
 <!-- Dropzone -->
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
 <!-- spotlight -->
 <script src="https://rawcdn.githack.com/nextapps-de/spotlight/0.7.8/dist/spotlight.bundle.js"></script>
@@ -452,37 +452,7 @@
     Sortable.create(SequenceMedia, sortable);
 </script>
 <!--Dropzone Script-->
-<script>
-    Dropzone.autoDiscover = false;
-    var dropzone = new Dropzone(".dropzone", {
-        maxFilesize: 100,
-        
-        //createImageThumbnails: true,
-
-        acceptedFiles: ".jpeg,.jpg,.png,.gif,.mp4",
-        addRemoveLinks: true,
-        removedfile: function (file) {
-            var fileName = file.name;
-            $.ajax({
-                type: 'POST',
-                url: "{{route('media_owner.remove_media')}}",
-                data: {"_token": "{{ csrf_token() }}", fileName: fileName},
-                sucess: function (data) {
-                }
-            });
-            var _ref;
-            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-        },
-        chunking: true,
-        chunkSize: 500000,
-        retryChunks: true,
-        retryChunksLimit: 3,
-        parallelUploads: 2,
-        dictFileTooBig: "File is too big, Max filesize:100 MiB.",
-        dictInvalidFileType: "You can't upload files of this type.",
-
-    });
-</script><!--End of Dropzone Script-->
+<!--End of Dropzone Script-->
 
 
 <script>

@@ -168,6 +168,7 @@
                     method="POST" enctype="multipart/form-data" d
                     ata-parsley-validate="true"
                     class="dropzone"
+                    id="media_upload_form"
                     >
                         @csrf
                         {{-- dropzone for files  --}}
@@ -177,68 +178,48 @@
 
                         
                     </form>
+                    {{-- send this form with ajax to the upload controller  --}}
+                    
                     <script>
-                    Dropzone.options.recommendationDiv = {
-                        acceptedFiles: 'image/*'
-                    };
-                    </script>
+                        
+                        var dropzone = new Dropzone(".dropzone", {
+                            maxFilesize: 100,
+                            
+                            //createImageThumbnails: true,
+                            
+                            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                            addRemoveLinks: true,
+                            removedfile: function (file) {
+                                var fileName = file.name;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{route('media_owner.remove_media')}}",
+                                    data: {"_token": "{{ csrf_token() }}", fileName: fileName},
+                                    sucess: function (data) {
+                                    }
+                                });
+                                var _ref;
+                                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+                            },
+                            chunking: true,
+                            chunkSize: 500000,
+                            retryChunks: true,
+                            retryChunksLimit: 3,
+                            parallelUploads: 2,
+                            dictFileTooBig: "File is too big, Max filesize:100 MiB.",
+                            dictInvalidFileType: "You can't upload files of this type.",
+                            
+                        });
+                        dropzone.autoDiscover = false;
+                        
+                        dropzone.on('addedfile', function(file) {
+                            alert("File " + file.name + " added.");
+                        });
+                        
+                        
+
+                        </script>
                     {{-- script to chunk upload the file on form submit --}}
-                            <script>
-                                document.getElementById('media_file').addEventListener('change', function () {
-                                    var file = this.files[0];
-                                    var fileType = file.type;
-                                    var validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-                                    var validVideoTypes = ['video/mp4'];
-                                    if (validImageTypes.includes(fileType)) {
-                                        // show the image thumbnail in the preview image tag and hide the video tag
-                                        document.getElementById('image_thumbnail').style.display = 'block';
-                                        document.getElementById('video_thumbnail').style.display = 'none';
-                                        document.getElementById('image_thumbnail').src = URL.createObjectURL(file);
-                                        document.getElementById('image_thumbnail').hidden = false;
-                                        document.getElementById('video_thumbnail').hidden = true;         
-                                        // stop the playing video if any
-                                        document.getElementById('video_thumbnail').pause();
-
-                                        
-                                    } else if (validVideoTypes.includes(fileType)) {
-                                    // show the video  in the preview video tag and hide the image tag                                        
-                                        document.getElementById('video_thumbnail').style.display = 'block';
-                                        document.getElementById('image_thumbnail').style.display = 'none';
-                                        document.getElementById('video_thumbnail').src = URL.createObjectURL(file);
-                                        document.getElementById('video_thumbnail').hidden = false;
-                                        document.getElementById('image_thumbnail').hidden = true;
-
-                                    } else {
-                                        alert('Please upload a valid image or video file');
-                                        this.value = '';
-                                        // hide the preview image and video tags
-                                        document.getElementById('image_thumbnail').style.display = 'none';
-                                        document.getElementById('video_thumbnail').style.display = 'none';
-                                        document.getElementById('image_thumbnail').hidden = true;
-                                        document.getElementById('video_thumbnail').hidden = true;
-                                        document.getElementById('video_thumbnail').pause();
-
-
-                                        
-                                    }
-                                });
-                                // chek the file size before uploading
-                                document.getElementById('media_file').addEventListener('change', function () {
-                                    var file = this.files[0];
-                                    var fileSize = file.size;
-                                    if (fileSize > 104857600) {
-                                        alert('File size is too large, please upload a file less than 100MB');
-                                        this.value = '';
-                                        // hide the preview image and video tags
-                                        document.getElementById('image_thumbnail').style.display = 'none';
-                                        document.getElementById('video_thumbnail').style.display = 'none';
-                                        document.getElementById('image_thumbnail').hidden = true;
-                                        document.getElementById('video_thumbnail').hidden = true;
-                                        document.getElementById('video_thumbnail').pause();
-
-                                    }
-                                });
-                                </script>
                 </div>
             </div>
         </div>

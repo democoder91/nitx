@@ -47,10 +47,23 @@ class UploadController extends Controller
         if ($save->isFinished()) {
             // get the file
             $file = $save->getFile();
-            // save the file to s3
-            // the file path variable is the user id then the date then the file name
-            $filePath = $request->user()->id . '/' . date('Y-m-d') . '/' . $file->getClientOriginalName();
-            $path = Storage::disk('public')->putFileAs($filePath, $file, $file->getClientOriginalName());
+            $fileSize = $file->getSize();
+            $mime = str_replace('/', '-', $file->getMimeType());
+            $date = date("Y-m-d");
+            // paths to save the files
+            $imageThumbnailPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/images-thumbnails/{$mime}/{$date}";
+            $imageCompressedPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/compressed-images/{$mime}/{$date}";
+            $videoPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos/{$date}";
+            $videoThumbnailPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos-thumbnails/{$date}";
+            $videoImageCompressedPath = env('APP_ENV') . '/user-' . auth()->user()->id . "/videos-compressed-images/{$date}";
+
+            // save the file to the storage
+            $path = Storage::disk('public')->putFileAs($imageThumbnailPath, $file, $file->getClientOriginalName());
+
+            }
+
+
+
 
             
 
@@ -59,14 +72,14 @@ class UploadController extends Controller
 
             
 
+            
+            //get the percentage of the upload
+            $percentage = $save->handler()->getPercentageDone();
+            
+            return response()->json(['done' => $percentage]);
         }
-
-        //get the percentage of the upload
-        $percentage = $save->handler()->getPercentageDone();
-
-        return response()->json(['done' => $percentage]);
     }
-}
+
 
 // a function to check if the file is a video or an image
 function isVideo($file)

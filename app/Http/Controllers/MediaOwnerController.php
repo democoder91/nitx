@@ -165,6 +165,7 @@ class MediaOwnerController extends Controller
         }
         return view('layout.media_owner.media_folders', [
             'user' => Auth::user(),
+            'parent_folder_id' => $parentFolderId,
             'all_folders' => Folder::getAllFolders(auth()->user()->id),
             'folders' => Folder::getFolders($parentFolderId, auth()->user()->id),
             'folder' => Folder::find($parentFolderId),

@@ -8,7 +8,7 @@
         /* Absolute Center Spinner */
         .loading {
             position: fixed;
-            z-index: 999;
+            /* z-index: 1; */
             height: 2em;
             width: 2em;
             overflow: show;
@@ -310,7 +310,76 @@
 
                         
                     </form>
-                        <div id="spinner" class="loading" hidden>Loading&#8230;</div>
+                    <div id="spinner" style="background: rgba(0, 0, 0, 0.8);
+                                            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                                            justify-content: center; align-items: center;" hidden>
+                        <div style="display: inline-block; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
+                            <h1 class=" text-nowrap text-center text-white    ">Please wait while processing your file ...</h1>
+                            <h1 class=" text-nowrap text-center text-white    ">This can take up to 3 minuites</h1>
+                        </div>
+                        <div style="display: inline-block; position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);">
+                            <div class="lds-ripple">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <style>
+                            .lds-ripple {
+                                display: inline-block;
+                                position: relative;
+                                width: 80px;
+                                height: 80px;
+                            }
+
+                            .lds-ripple div {
+                                position: absolute;
+                                border: 4px solid rgb(255, 255, 255);
+                                opacity: 1;
+                                border-radius: 50%;
+                                animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+                            }
+
+                            .lds-ripple div:nth-child(2) {
+                                animation-delay: -0.5s;
+                            }
+
+                            @keyframes lds-ripple {
+                                0% {
+                                    top: 36px;
+                                    left: 36px;
+                                    width: 0;
+                                    height: 0;
+                                    opacity: 0;
+                                }
+
+                                4.9% {
+                                    top: 36px;
+                                    left: 36px;
+                                    width: 0;
+                                    height: 0;
+                                    opacity: 0;
+                                }
+
+                                5% {
+                                    top: 36px;
+                                    left: 36px;
+                                    width: 0;
+                                    height: 0;
+                                    opacity: 1;
+                                }
+
+                                100% {
+                                    top: 0px;
+                                    left: 0px;
+                                    width: 72px;
+                                    height: 72px;
+                                    opacity: 0;
+                                }
+                            }
+
+                        </style>
+                    </div>
+
 
 
                         
@@ -324,7 +393,7 @@
                     <script>
                         
                         var dropzone = new Dropzone(".dropzone", {
-                            maxFilesize: 150,
+                            maxFilesize: 100,
                             
                             //createImageThumbnails: true,
                             
@@ -347,13 +416,14 @@
                             retryChunks: true,
                             retryChunksLimit: 3,
                             parallelUploads: 2,
-                            dictFileTooBig: "File is too big, Max filesize:150 MiB.",
+                            dictFileTooBig: "File is too big, Max filesize:100 MiB.",
                             dictInvalidFileType: "You can't upload files of this type.",
+                            
                             
                         });
                         dropzone.autoDiscover = false;
                         
-                        dropzone.on('addedfile', function(file) {
+                        dropzone.on('sending', function(file) {
                             // hide the element with the id of media_upload_form
                             document.getElementById('media_upload_form').style.display = 'none';
                             // show the spinner by removing the hidden attribute

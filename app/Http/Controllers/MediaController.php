@@ -41,6 +41,7 @@ class MediaController extends Controller
             $media->delete();
             return redirect()->back()->with('message', 'Your media has been deleted successfully');
         }
+        
     }
 
     public static function renameMedia(Request $request, $mediaId)

@@ -38,6 +38,10 @@ class UploadController extends Controller
     {
         set_time_limit(120);
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+        //if parent folder id is null , set it to request parent folder id
+        if($parentFolderId == null && $request->parent_folder_id != null){
+            $parentFolderId = $request->parent_folder_id;
+        }
 
         if (!$receiver->isUploaded()) {
             throw new UploadMissingFileException();

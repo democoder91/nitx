@@ -4,6 +4,138 @@
     @section('active-txt-4', __('hp-text-color-primary-1'))
     @endsection
 
+    <style>
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
+
+            background: -webkit-radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 150ms infinite linear;
+            -moz-animation: spinner 150ms infinite linear;
+            -ms-animation: spinner 150ms infinite linear;
+            -o-animation: spinner 150ms infinite linear;
+            animation: spinner 150ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+
 
     <div class="col-12">
 
@@ -163,7 +295,7 @@
                             <video id="video_thumbnail" src="" style="display: none; width: 350px; height: 200px; object-fit: cover;" controls hidden></video>
                         </div>
                     </div>
-
+                <div id="form_upload_div">
                     <form action="{{route('media_owner.upload_media')}}" 
                     method="POST" enctype="multipart/form-data" d
                     ata-parsley-validate="true"
@@ -178,16 +310,25 @@
 
                         
                     </form>
+                        <div id="spinner" class="loading" hidden>Loading&#8230;</div>
+
+
+                        
+                        
+                    </div>
+                        
+
+                </div>
                     {{-- send this form with ajax to the upload controller  --}}
                     
                     <script>
                         
                         var dropzone = new Dropzone(".dropzone", {
-                            maxFilesize: 100,
+                            maxFilesize: 150,
                             
                             //createImageThumbnails: true,
                             
-                            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                            acceptedFiles: ".jpeg,.jpg,.png,.gif,.mp4",
                             addRemoveLinks: true,
                             removedfile: function (file) {
                                 var fileName = file.name;
@@ -206,14 +347,26 @@
                             retryChunks: true,
                             retryChunksLimit: 3,
                             parallelUploads: 2,
-                            dictFileTooBig: "File is too big, Max filesize:100 MiB.",
+                            dictFileTooBig: "File is too big, Max filesize:150 MiB.",
                             dictInvalidFileType: "You can't upload files of this type.",
                             
                         });
                         dropzone.autoDiscover = false;
                         
                         dropzone.on('addedfile', function(file) {
-                            alert("File " + file.name + " added.");
+                            // hide the element with the id of media_upload_form
+                            document.getElementById('media_upload_form').style.display = 'none';
+                            // show the spinner by removing the hidden attribute
+                            document.getElementById('spinner').removeAttribute('hidden');
+
+                        });
+                        dropzone.on('success', function(file) {
+                            // hide the spinner
+                            document.getElementById('spinner').setAttribute('hidden', 'true');
+                            // close the modal
+                            $('#uploadmodal').modal('hide');
+                            // refresh the page 
+                            location.reload();
                         });
                         
                         

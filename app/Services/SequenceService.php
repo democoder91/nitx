@@ -66,4 +66,11 @@ class SequenceService
         }
     }
 
+    // a function to store the media to the data base 
+    public static function storeMedia($media, $sequence)
+    {
+        $media = $media->store('media', 'public');
+        $sequence->media = $media;
+        $sequence->save();
+    }
 }

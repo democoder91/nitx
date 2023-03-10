@@ -379,5 +379,5 @@
         </div>
     </div>
 </div><!-- End ofDelete Modal -->
-<script src="{{ asset('js\sequnce.js') }}"></script>
+<script type="module" src="{{ asset('js\sequnce.js') }}"></script>
 </x-media_owner.layout>

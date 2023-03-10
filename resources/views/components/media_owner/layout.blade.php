@@ -241,14 +241,13 @@
 <script src="{{ asset('js\sequnce.js') }}"></script>
 
 
-
-
-
 <script>
     $(document).ready(function () {
         $(document).on('click', '#add-media-to-sequence-btn', function (e) {
             order_id = order_id + 1;
             e.preventDefault();
+            // add the validate media time method here
+
             let id = Date.now();
             let nodes = $.parseHTML(
                 `<li class="list-group-item" data-id="${order_id}">
@@ -277,15 +276,15 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6 col-sm-4">
-                                                                    <label for="minutes" class="col-form-label">Minutes</label>
-                                                                    <input type="number" name="minutes[]" class="form-control"
-                                                                           id="minutes" placeholder="3 m" min="0" required="true">
-                                                                </div>
-                                                                <div class="col-6 col-sm-4">
-                                                                    <label for="seconds" class="col-form-label">Seconds</label>
-                                                                    <input type="number" name="seconds[]" class="form-control"
-                                                                           id="seconds" placeholder="50 s" min="0" required="true">
+                                                                <div class="col-6 row">
+                                                                    <div class="form-group col">
+                                                                        <label for="minutes" class="col-form-label ">{{ __('Minutes') }}</label>
+                                                                        <input type="number " name="minutes[]" class="form-control minutes" placeholder="3 m" min="0" required="true">
+                                                                    </div>
+                                                                    <div class="form-group col">
+                                                                        <label for="seconds" class="col-form-label ">{{ __('Seconds') }}</label>
+                                                                        <input type="number" name="seconds[]" class="form-control seconds" placeholder="50 s" min="0" required="true">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -293,11 +292,45 @@
                                                 </li>`
             )
             $('#SequenceMedia').append(nodes)
+            const minutesFields = document.getElementsByName('minutes[]');
+const secondsFields = document.getElementsByName('seconds[]');
+
+// loop through each field and apply the validation
+for (let i = 0; i < minutesFields.length; i++) {
+  const minutesField = minutesFields[i];
+  const secondsField = secondsFields[i];
+
+  // add a change event listener to the minutes field
+  minutesField.addEventListener('change', () => {
+    if (minutesField.value > 0 && minutesField.value < 60) {
+      // if the minutes value is valid, remove the 'required' attribute from the seconds field
+      secondsField.removeAttribute('required');
+      secondsField.removeAttribute('data-parsley-range', '[1, 60]');
+    } else {
+      // if the minutes value is not valid, add the 'required' attribute to the seconds field
+      secondsField.setAttribute('required', true);
+      secondsField.setAttribute('data-parsley-range', '[1, 60]');
+    }
+  });
+
+  // add a change event listener to the seconds field
+  secondsField.addEventListener('change', () => {
+    if (secondsField.value > 0 && secondsField.value < 60) {
+      // if the seconds value is valid, remove the 'required' attribute from the minutes field
+      minutesField.removeAttribute('required');
+      minutesField.removeAttribute('data-parsley-range', '[1, 60]');
+    } else {
+      // if the seconds value is not valid, add the 'required' attribute to the minutes field
+      minutesField.setAttribute('required', true);
+      minutesField.setAttribute('data-parsley-range', '[1, 60]');
+    }
+  });
+}
             $(`#media-preview-${id}`).click(function () {
                 shownMedia = this.id
                 shownMediaContainer = document.getElementById(shownMedia).parentNode
             });
-        })
+        });
 
         $(document).on('click', '#remove-media-to-sequence-btn', function (e) {
             if (order_id > 1) {

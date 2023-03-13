@@ -215,11 +215,12 @@
                                 <div class="card card-body" style="padding: 0.2em">
                                     @if($item->type =='image')
                                     <a class="spotlight" theme href="{{$item->compressed_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}">
-                                        <img src="{{$item->thumbnail_media_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" alt="{{$item->name}}" style="  width:100%; height:8em; object-fit:cover;">
+                                        <img src="{{$item->thumbnail_media_path ?? $item->media_aws_s3_url ??  asset('img/ad/mediaLoading3.gif') }}" alt="{{$item->name}}" style="  width:100%; height:8em; object-fit:cover;">
                                     </a>
                                     @elseif($item->type =='video')
-                                    <a class="spotlight" data-media="video" data-src-webm="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-ogg="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-mp4="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-autoplay="false" data-poster="">
+                                    <a class="spotlight" data-media="video" data-src-webm="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-ogg="{{$item->video_path ?? $item->media_aws_s3_url ?? asset('storage/' . $item->path)}}" data-src-mp4="{{$item->video_path ?? $item->media_aws_s3_url ?? "asset('storage/' . $item->path)"}}" data-autoplay="false" data-poster="">
                                         <i class="iconly-Light-Play hp-text-color-primary-4" style="font-size: 3em; position:absolute; top:25%; left:40%"></i>
+                                        {{-- @dd($item->thumbnail_media_path ??  asset('/img/ad/nothumbnail.png')); --}}
                                         <img src="{{$item->thumbnail_media_path ??  asset('/img/ad/nothumbnail.png')}}" style="  width:100%; height:8em; object-fit:cover;">
                                     </a>
                                     @endif
@@ -436,7 +437,7 @@
                             // close the modal
                             $('#uploadmodal').modal('hide');
                             // refresh the page 
-                            // location.reload();
+                            location.reload();
                         });
                         
                         

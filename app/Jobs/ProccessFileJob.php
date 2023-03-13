@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Constants\Status;
 use App\Models\Media;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -100,7 +101,7 @@ class ProccessFileJob implements ShouldQueue
             $videoThumbnailSystemName = $this->createFilename($file, 'png');
             $videoImageCompressedSystemName = $this->createFilename($file, 'png');
             try {
-                $lowBitrateFormat = (new X264)->setKiloBitrate(3000);
+                $lowBitrateFormat = (new X264)->setKiloBitrate(512);
                 $videoPath .= '/' . $videoSystemName;
                 $videoThumbnailPath .= '/' . $videoThumbnailSystemName;
                 $videoImageCompressedPath .= '/' . $videoImageCompressedSystemName;
@@ -147,24 +148,27 @@ class ProccessFileJob implements ShouldQueue
                 Storage::disk('s3')->setVisibility($videoImageCompressedURL, 'public');
                 // get the video size after compression
                 $videoSize = Storage::disk('s3')->size($videoPath);
-                $media = Media::create([
-                    'media_owner_id' => auth()->user()->id,
-                    'parent_folder_id' => $parentFolderId,
-                    'name' => $file->getClientOriginalName(),
-                    'type' => 'video',
-                    'size' => $videoSize,
-                    'mime' => $mime,
-                    'video_path' => $videoURL,
-                    'thumbnail_media_path' => $videoThumbnailURL,
-                    'compressed_media_path' => $videoURL,
-                    'width' => 1280,
-                    'height' => 720,
-                    'duration' => $duration ,
-                    'system_media_name' => $videoSystemName,
-                    'path' => $videoPath,
-                    'media_aws_s3_url'=> $videoURL,
-                    
-                ]);
+                $media = Media::where('id' , "=", $mediaId)->first();
+                if ($media != null){
+                    $media->media_owner_id = $userId;
+                    $media->parent_folder_id = $parentFolderId;
+                    $media->name = $file->getClientOriginalName();
+                    $media->type = 'video';
+                    $media->size = $videoSize;
+                    $media->mime = $mime;
+                    $media->video_path = $videoURL;
+                    $media->thumbnail_media_path = $videoThumbnailURL;
+                    $media->compressed_media_path = $videoURL;
+                    $media->width = 1280;
+                    $media->height = 720;
+                    $media->duration = $duration ;
+                    $media->system_media_name = $videoSystemName;
+                    $media->path = $videoPath;
+                    $media->media_aws_s3_url= $videoURL;
+                    $media->status = Status::Ready->value;
+                    $media->save();
+                }
+                
             } catch (Exception $exception) {
                 dd($exception->getMessage());
             }
@@ -183,8 +187,8 @@ class ProccessFileJob implements ShouldQueue
                 Storage::disk('s3')->setVisibility($compressedMediaURL, 's3');
                 Storage::disk('s3')->setVisibility($thumbnailMediaURL, 's3');
             } else {
-                $compressedImage = Image::make($file)->encode('jpg', 50);
-                $thumbnailImage = Image::make($file)->resize(248, 128)->encode('jpg', 50);
+                $compressedImage = Image::make($file)->encode('jpg', 100);
+                $thumbnailImage = Image::make($file)->resize(248, 128)->encode('jpg', 100);
                 $disk->put($imageCompressedPath . '/' . $imageSystemName, $compressedImage);
                 $disk->put($imageThumbnailPath . '/' . $imageSystemName, $thumbnailImage);
                 $compressedMediaURL = Storage::disk('s3')->url($imageCompressedPath . '/' . $imageSystemName);
@@ -212,28 +216,6 @@ class ProccessFileJob implements ShouldQueue
                     // update media information in the database
                     $media->save();
                 }
-
-                
-
-
-
-                // $media = Media::create([
-                //     'media_owner_id' => $userId,
-                //     'parent_folder_id' => $parentFolderId,
-                //     'name' => $file->getClientOriginalName(),
-                //     'type' => 'image',
-                //     'size' => $fileSize,
-                //     'mime' => $mime,
-                //     'thumbnail_media_path' => $thumbnailMediaURL,
-                //     'compressed_media_path' => $compressedMediaURL,
-                //     'width' => $width,
-                //     'height' => $height,
-                //     'system_media_name' => $this->createFilename($file),
-                //     'path' => $compressedMediaURL,
-                //     'media_aws_s3_url' => $compressedMediaURL,
-
-                // ]);
-
             }
             //get the percentage of the upload
 

@@ -436,7 +436,7 @@
                             // close the modal
                             $('#uploadmodal').modal('hide');
                             // refresh the page 
-                            location.reload();
+                            // location.reload();
                         });
                         
                         

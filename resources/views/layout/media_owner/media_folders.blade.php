@@ -220,7 +220,7 @@
                                             @if ($item->type == 'image')
                                                 <a class="spotlight"
                                                    href="{{ $item->compressed_media_path ?? ($item->media_aws_s3_url ?? asset('storage/' . $item->path)) }}">
-                                                    <img src="{{ $item->thumbnail_media_path ?? ($item->media_aws_s3_url ?? asset('storage/' . $item->path)) }}"
+                                                    <img src="{{$item->thumbnail_media_path ?? $item->media_aws_s3_url ??  asset('img/ad/mediaLoading3.gif') }}"
                                                          alt="{{ $item->name }}"
                                                          style="  width:100%; height:8em; object-fit:cover;">
                                                 </a>

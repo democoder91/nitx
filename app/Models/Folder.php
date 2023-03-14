@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,6 +33,9 @@ class Folder extends Model
             ->where('parent_folder_id', '=', $parentFolderId)
             ->where('media_owner_id', '=', $mediaOwnerId)
             ->where('deleted_at', '=', null)
+            // where status is Ready
+            ->where('status', '=', Status::Ready->value)
+            
             ->get();
     }
 

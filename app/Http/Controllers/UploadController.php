@@ -74,7 +74,7 @@ class UploadController extends Controller
                     $media->name = $file->getClientOriginalName();
                     $media->type = 'image';
                     $media->mime = $mime;
-                    $media->status = Status::Ready->value;
+                    $media->status = Status::NotReady->value;
                     $media->save();
             $media->save();
             $this->dispatch((new ProccessFileJob(

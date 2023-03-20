@@ -20,136 +20,43 @@
                 </ul>
             </div>
         @endif
-        <style>
-            /* Absolute Center Spinner */
-            .loading {
-                position: fixed;
-                z-index: 999;
-                height: 2em;
-                width: 2em;
-                overflow: show;
-                margin: auto;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                right: 0;
+        <style>.lds-facebook {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+          }
+          .lds-facebook div {
+            display: inline-block;
+            position: absolute;
+            left: 8px;
+            width: 16px;
+            background: rgb(11, 0, 165);
+            animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+          }
+          .lds-facebook div:nth-child(1) {
+            left: 8px;
+            animation-delay: -0.24s;
+          }
+          .lds-facebook div:nth-child(2) {
+            left: 32px;
+            animation-delay: -0.12s;
+          }
+          .lds-facebook div:nth-child(3) {
+            left: 56px;
+            animation-delay: 0;
+          }
+          @keyframes lds-facebook {
+            0% {
+              top: 8px;
+              height: 64px;
             }
-    
-            /* Transparent Overlay */
-            .loading:before {
-                content: '';
-                display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
-    
-                background: -webkit-radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .8));
+            50%, 100% {
+              top: 24px;
+              height: 32px;
             }
-    
-            /* :not(:required) hides these rules from IE9 and below */
-            .loading:not(:required) {
-                /* hide "loading..." text */
-                font: 0/0 a;
-                color: transparent;
-                text-shadow: none;
-                background-color: transparent;
-                border: 0;
-            }
-    
-            .loading:not(:required):after {
-                content: '';
-                display: block;
-                font-size: 10px;
-                width: 1em;
-                height: 1em;
-                margin-top: -0.5em;
-                -webkit-animation: spinner 150ms infinite linear;
-                -moz-animation: spinner 150ms infinite linear;
-                -ms-animation: spinner 150ms infinite linear;
-                -o-animation: spinner 150ms infinite linear;
-                animation: spinner 150ms infinite linear;
-                border-radius: 0.5em;
-                -webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
-                box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
-            }
-    
-            /* Animation */
-    
-            @-webkit-keyframes spinner {
-                0% {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    -o-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                }
-    
-                100% {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
-                    -o-transform: rotate(360deg);
-                    transform: rotate(360deg);
-                }
-            }
-    
-            @-moz-keyframes spinner {
-                0% {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    -o-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                }
-    
-                100% {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
-                    -o-transform: rotate(360deg);
-                    transform: rotate(360deg);
-                }
-            }
-    
-            @-o-keyframes spinner {
-                0% {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    -o-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                }
-    
-                100% {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
-                    -o-transform: rotate(360deg);
-                    transform: rotate(360deg);
-                }
-            }
-    
-            @keyframes spinner {
-                0% {
-                    -webkit-transform: rotate(0deg);
-                    -moz-transform: rotate(0deg);
-                    -ms-transform: rotate(0deg);
-                    -o-transform: rotate(0deg);
-                    transform: rotate(0deg);
-                }
-    
-                100% {
-                    -webkit-transform: rotate(360deg);
-                    -moz-transform: rotate(360deg);
-                    -ms-transform: rotate(360deg);
-                    -o-transform: rotate(360deg);
-                    transform: rotate(360deg);
-                }
-            }
-    
+          }
+          
         </style>
         <div class="card pb-0 pb-sm-64">
             <div class="card-body">
@@ -326,74 +233,13 @@
 
                         
                     </form>
-                    <div id="spinner" style="background: rgba(0, 0, 0, 0.8);
-                                            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-                                            justify-content: center; align-items: center;" hidden>
-                        <div style="display: inline-block; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
-                            <h1 class=" text-nowrap text-center text-white    ">Please wait while processing your file ...</h1>
-                            <h1 class=" text-nowrap text-center text-white    ">This can take up to 3 minuites</h1>
+                    <div id="loading" hidden  class=" p-24">
+                        <div class="d-flex justify-content-center">
+                            <h1>Uploading ..  </h1>
+                            <div class="lds-facebook"><div></div><div></div><div></div></div>                            
+                            <hr>
                         </div>
-                        <div style="display: inline-block; position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);">
-                            <div class="lds-ripple">
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <style>
-                            .lds-ripple {
-                                display: inline-block;
-                                position: relative;
-                                width: 80px;
-                                height: 80px;
-                            }
-
-                            .lds-ripple div {
-                                position: absolute;
-                                border: 4px solid rgb(255, 255, 255);
-                                opacity: 1;
-                                border-radius: 50%;
-                                animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-                            }
-
-                            .lds-ripple div:nth-child(2) {
-                                animation-delay: -0.5s;
-                            }
-
-                            @keyframes lds-ripple {
-                                0% {
-                                    top: 36px;
-                                    left: 36px;
-                                    width: 0;
-                                    height: 0;
-                                    opacity: 0;
-                                }
-
-                                4.9% {
-                                    top: 36px;
-                                    left: 36px;
-                                    width: 0;
-                                    height: 0;
-                                    opacity: 0;
-                                }
-
-                                5% {
-                                    top: 36px;
-                                    left: 36px;
-                                    width: 0;
-                                    height: 0;
-                                    opacity: 1;
-                                }
-
-                                100% {
-                                    top: 0px;
-                                    left: 0px;
-                                    width: 72px;
-                                    height: 72px;
-                                    opacity: 0;
-                                }
-                            }
-
-                        </style>
+                        <h1 class="text-center">kindly dont refresh the page untill the upload is done </h1>
                     </div>
 
                 </div>
@@ -413,7 +259,7 @@
                     $.ajax({
                         type: 'POST',
                         url: "{{route('media_owner.remove_media')}}",
-                        data: {"_token": "{{ csrf_token() }}", fileName: fileName},
+                        data: {"_token": "{{ csrf_token() }}", fileName: fileName, parentFolderId: {{ $parent_folder_id }}},
                         sucess: function (data) {
                         }
                     });
@@ -427,25 +273,29 @@
                 parallelUploads: 2,
                 dictFileTooBig: "File is too big, Max filesize:100 MiB.",
                 dictInvalidFileType: "You can't upload files of this type.",
-                params: {
-                            parent_folder_id: {{ $parent_folder_id }}
-                        },
+                sending: function(file, xhr, formData) {
+                    // Append the parameter to the formData object
+                    formData.append('parent_folder_id', {{ $parent_folder_id }});
+                },
+                
+                
+                
+                
                 
             });
             dropzone.autoDiscover = false;
             
             dropzone.on('sending', function(file) {
+                
                 // hide the element with the id of media_upload_form
                 document.getElementById('media_upload_form').style.display = 'none';
                 // show the spinner by removing the hidden attribute
-                document.getElementById('spinner').removeAttribute('hidden');
-
-
+                document.getElementById('loading').removeAttribute('hidden');
 
             });
             dropzone.on('success', function(file) {
                 // hide the spinner
-                document.getElementById('spinner').setAttribute('hidden', 'true');
+                document.getElementById('loading').setAttribute('hidden', 'true');
                 // close the modal
                 $('#uploadmodal').modal('hide');
                 // refresh the page 

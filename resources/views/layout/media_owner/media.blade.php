@@ -272,18 +272,18 @@
                         dropzone.autoDiscover = false;
                         
                         dropzone.on('sending', function(file) {
-                            // hide the element with the id of media_upload_form
-                            document.getElementById('media_upload_form').style.display = 'none';
-                            // show the spinner by removing the hidden attribute
-                            document.getElementById('loading').removeAttribute('hidden');
+                            // // hide the element with the id of media_upload_form
+                            // document.getElementById('media_upload_form').style.display = 'none';
+                            // // show the spinner by removing the hidden attribute
+                            // document.getElementById('loading').removeAttribute('hidden');
 
                         });
                         dropzone.on('success', function(file) {
-                            // hide the spinner
-                            document.getElementById('loading').setAttribute('hidden', 'true');
-                            // close the modal
-                            $('#uploadmodal').modal('hide');
-                            // refresh the page 
+                            // // hide the spinner
+                            // document.getElementById('loading').setAttribute('hidden', 'true');
+                            // // close the modal
+                            // $('#uploadmodal').modal('hide');
+                            // // refresh the page 
                             location.reload();
                         });
                         

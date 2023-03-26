@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MediaOwner;
+use App\Models\Screen;
 use App\Models\Ad;
 use App\Models\Admin;
+use App\Models\Plan;
+use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use Carbon\Carbon;
@@ -93,8 +97,21 @@ class AdminController extends Controller
 
     public function subscriptions()
     {
+        // get all subscriptions and join with plans and media owners and media owner screens 
+        $subscriptions = Subscription::all();
+
+        foreach ($subscriptions as $subscription) {
+            $subscription->plan_name = Plan::find($subscription->plan_id)->name;
+            $subscription->media_owner_name = MediaOwner::find($subscription->media_owner_id)->name;
+            $subscription->media_owner_screen = Screen::where('media_owner_id', $subscription->media_owner_id)->count();
+        }
+            
+        
+
+        
         return view('layout.admin_control.subscriptions', [
-            'user' => Auth::user()
+            'user' => Auth::user(),
+            'subscriptions' => $subscriptions
         ]);
     }
 

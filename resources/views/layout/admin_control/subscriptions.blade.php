@@ -15,17 +15,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row"><h5>Thestage TV</h5></th>
-                    <td><h5>Standard Plan</h5></td>
-                    <td><h5>12 / Screens</h5></td>
-                    <td>
-                        <span class="badge bg-danger-4 hp-bg-dark-danger text-dark border-danger" hidden>Canceled</span>
-                        <span class="badge bg-warning-4 hp-bg-dark-warning text-dark border-warning" hidden>about to end</span>
-                        <span class="badge bg-success-4 hp-bg-dark-success text-dark border-success">Active</span>
-                    </td>
-                    <td><a href="#PlanInfoModal" type="button"  data-bs-toggle="modal" data-bs-target="#PlanInfoModal"><i class="iconly-Light-Edit"></i></a></td>
-                </tr>
+                {{-- a table row to show subscription for each --}}
+                @foreach ($subscriptions as $subscription)
+                    <tr>
+                        <td>
+                            {{-- show the subscription media owner name  --}}
+                            {{ $subscription->media_owner_name }}
+                        </td>
+                        <td>{{ $subscription->plan_name }}</td>
+                        <td>{{ $subscription->media_owner_screen }}</td>
+                        <td>active</td>
+                        <td>
+                            <a href="#PlanInfoModal" type="button"  data-bs-toggle="modal" data-bs-target="#PlanInfoModal"><i class="iconly-Light-Edit"></i></a>
+                        </td>
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
     </div>

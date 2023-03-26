@@ -134,7 +134,7 @@
             <div class="hp-main-layout-content">
                 <div class="row mb-32 gy-32">
                     <div class="col-12">
-                        <h3>Welcome back, Edward 👋</h3>
+                        <h3>Welcome back, {{ Auth::user()->name }} 👋</h3>
                     </div>
                     <div class="col-12">
                         {{ $slot }}
